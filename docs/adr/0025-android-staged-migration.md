@@ -557,3 +557,17 @@ this record:
   it is a cold start; a grant in Health Connect's own UI does not, and exercises the
   foreground re-probe.
 
+## Amendment (2026-10-17): brand colour replaces wallpaper colour (ADR 0027)
+
+[ADR 0027](0027-brand-palette-accent-and-generated-material-scheme.md) reverses
+"Android colour is dynamic":
+
+- **The new palette.** Android takes a Material 3 scheme generated at build time
+  from the brand (`SchemeContent`, seed `#FF7A3D`), and every
+  `getMaterialColors`/`useMaterialColors` read moves to it.
+- **No wallpaper option.** There is no setting for wallpaper colours.
+- **Rejected alternative.** The Alternatives entry "Static Material palette seeded
+  from the brand colour" was rejected "by product decision" when the app had no
+  brand of its own. ADR 0027 adopts it (with Google's `SchemeContent`).
+- **Still separate from iOS.** The Android palette still doesn't reuse the iOS
+  palette, and the two apps share only the brand hue and the segment and stat colours.
