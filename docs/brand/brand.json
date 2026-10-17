@@ -1,0 +1,34 @@
+{
+  "name": "RunBro",
+  "mark": "Dash R: a monoline italic R with three speed dashes",
+  "gradient": {
+    "angle": "135deg (top-left to bottom-right)",
+    "stops": [
+      { "offset": 0, "color": "#FFB224", "name": "sunrise-amber" },
+      { "offset": 1, "color": "#FF4256", "name": "sunrise-coral" }
+    ],
+    "css": "linear-gradient(135deg, #FFB224 0%, #FF4256 100%)",
+    "mid": "#FF7A3D"
+  },
+  "colors": {
+    "mark": "#FFFFFF",
+    "dashOpacities": [0.6, 0.8, 1.0],
+    "textOnGradient": "#FFFFFF",
+    "ink": "#1D1D1F",
+    "inkSecondary": "#6E6E73",
+    "paper": "#FFF8F2",
+    "splashBackground": "#FF7A3D"
+  },
+  "font": {
+    "family": "Barlow",
+    "license": "SIL Open Font License 1.1 (Google Fonts)",
+    "wordmark": { "weight": 900, "style": "italic", "letterSpacing": "-0.01em" },
+    "tagline": { "weight": 800, "style": "italic" },
+    "body": { "weight": 600, "style": "normal" }
+  },
+  "construction": {
+    "r": "stroke 104, round caps and joins, skewX(-12deg)",
+    "dashes": "stroke 50, round caps; lengths 98/64/30 at the bowl, waist and leg heights; right ends parallel to the stem",
+    "opticalCentre": "midpoint of the ink's centre of mass and its bounding-box centre"
+  }
+}
