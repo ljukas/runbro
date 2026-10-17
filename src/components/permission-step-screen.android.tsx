@@ -1,4 +1,5 @@
-import { Column, Row, Spacer, useMaterialColors } from '@expo/ui/jetpack-compose';
+import { Column, Row, Spacer } from '@expo/ui/jetpack-compose';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import {
   background,
   clip,
@@ -71,7 +72,7 @@ export function PermissionStepScreen({
   onSecondaryPress?: () => void | Promise<void>;
 }) {
   const router = useRouter();
-  const colors = useMaterialColors();
+  const colors = useBrandScheme();
   const { fontScale } = useWindowDimensions();
   const busy = useRef(false);
 

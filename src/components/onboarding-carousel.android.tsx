@@ -5,8 +5,8 @@ import {
   type HorizontalPagerHandle,
   Row,
   Spacer,
-  useMaterialColors,
 } from '@expo/ui/jetpack-compose';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import {
   background,
   clip,
@@ -52,7 +52,7 @@ export function OnboardingCarousel({
   finishLabel: string;
   onFinish: () => void;
 }) {
-  const colors = useMaterialColors();
+  const colors = useBrandScheme();
   const { fontScale, height: windowHeight } = useWindowDimensions();
   const reduceMotion = useReducedMotion();
   const pager = useRef<HorizontalPagerHandle>(null);

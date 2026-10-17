@@ -1,4 +1,5 @@
-import { Box, useMaterialColors } from '@expo/ui/jetpack-compose';
+import { Box } from '@expo/ui/jetpack-compose';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import { background, clip, Shapes, size } from '@expo/ui/jetpack-compose/modifiers';
 import type { SymbolViewProps } from 'expo-symbols';
 
@@ -30,7 +31,7 @@ export function OnboardingHero({
   symbol: SymbolViewProps['name'];
   side: number;
 }) {
-  const colors = useMaterialColors();
+  const colors = useBrandScheme();
   return (
     <Box
       contentAlignment="center"

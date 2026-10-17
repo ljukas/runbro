@@ -1,4 +1,5 @@
-import { ListItem, Text, useMaterialColors } from '@expo/ui/jetpack-compose';
+import { ListItem, Text } from '@expo/ui/jetpack-compose';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import { clickable } from '@expo/ui/jetpack-compose/modifiers';
 
 import { formatMinutes } from '@/domain/format';
@@ -17,8 +18,7 @@ export function PlanSessionRow({
   disabled: boolean;
   onPress: () => void;
 }) {
-  // Inside the Island, so this is the Host's own (wallpaper-derived) palette.
-  const m = useMaterialColors();
+  const m = useBrandScheme();
   const state = completed ? 'Completed' : isNext ? 'Up next' : 'Not started';
   return (
     <ListItem

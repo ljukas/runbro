@@ -8,8 +8,8 @@ import {
   Row,
   Text,
   TextButton,
-  useMaterialColors,
 } from '@expo/ui/jetpack-compose';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import {
   animateContentSize,
   background,
@@ -46,7 +46,7 @@ export function OnboardingButton({
   fill?: boolean;
   trailingSymbol?: SymbolViewProps['name'];
 }) {
-  const colors = useMaterialColors();
+  const colors = useBrandScheme();
   const text = (
     <Text
       style={{
@@ -112,7 +112,7 @@ export function OnboardingAdvanceButton({
   onPress: () => void;
   reduceMotion: boolean;
 }) {
-  const colors = useMaterialColors();
+  const colors = useBrandScheme();
   const labelStyle = { typography: 'labelLarge', fontSize: 16 } as const;
   const next = (
     <Text color={colors.onSecondaryContainer} style={labelStyle}>

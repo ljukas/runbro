@@ -1,12 +1,5 @@
-import {
-  Box,
-  Card,
-  Column,
-  LinearProgressIndicator,
-  Row,
-  Text,
-  useMaterialColors,
-} from '@expo/ui/jetpack-compose';
+import { Box, Card, Column, LinearProgressIndicator, Row, Text } from '@expo/ui/jetpack-compose';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import {
   alpha,
   background,
@@ -72,7 +65,7 @@ function RunModeCardRoot({
   onPress: () => void;
   action?: { label: string; disabled?: boolean; onPress: () => void };
 }) {
-  const m = useMaterialColors();
+  const m = useBrandScheme();
   const tone = featured
     ? {
         container: m.primaryContainer,
