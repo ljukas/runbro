@@ -1,8 +1,28 @@
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
+import { Platform } from 'react-native';
+
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 
 export default function TabsLayout() {
+  const roles = useBrandScheme();
+  // why: iconColor/tintColor aren't Android-gated in expo-router's types, and iOS keeps its asset-catalog accent.
+  const androidTabColors =
+    Platform.OS === 'android'
+      ? {
+          backgroundColor: roles.surfaceContainer,
+          indicatorColor: roles.secondaryContainer,
+          iconColor: { default: roles.onSurfaceVariant, selected: roles.onSecondaryContainer },
+          labelStyle: {
+            default: { color: roles.onSurfaceVariant },
+            selected: { color: roles.onSurface },
+          },
+          rippleColor: `${roles.onSurface}1A`,
+          tintColor: roles.onSecondaryContainer,
+        }
+      : {};
+
   return (
-    <NativeTabs>
+    <NativeTabs {...androidTabColors}>
       <NativeTabs.Trigger name="(index)">
         <NativeTabs.Trigger.Label>Run</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="figure.run" md="directions_run" />

@@ -8,6 +8,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "runbro",
     "userInterfaceStyle": "automatic",
+    "primaryColor": "#A53C00",
     "ios": {
       "bundleIdentifier": "se.lukaslindqvist.runbro",
       "deploymentTarget": "17.0",
