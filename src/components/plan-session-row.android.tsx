@@ -1,4 +1,6 @@
-import { ListItem, Text } from '@expo/ui/jetpack-compose';
+import { Text } from '@expo/ui/jetpack-compose';
+
+import { Island } from '@/components/island';
 import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import { clickable } from '@expo/ui/jetpack-compose/modifiers';
 
@@ -21,7 +23,7 @@ export function PlanSessionRow({
   const m = useBrandScheme();
   const state = completed ? 'Completed' : isNext ? 'Up next' : 'Not started';
   return (
-    <ListItem
+    <Island.ListItem
       modifiers={disabled ? [] : [clickable(onPress)]}
       colors={
         isNext
@@ -29,15 +31,15 @@ export function PlanSessionRow({
           : undefined
       }
     >
-      <ListItem.HeadlineContent>
+      <Island.ListItem.HeadlineContent>
         <Text>{`Day ${session.day}`}</Text>
-      </ListItem.HeadlineContent>
-      <ListItem.SupportingContent>
+      </Island.ListItem.HeadlineContent>
+      <Island.ListItem.SupportingContent>
         <Text>{state}</Text>
-      </ListItem.SupportingContent>
-      <ListItem.TrailingContent>
+      </Island.ListItem.SupportingContent>
+      <Island.ListItem.TrailingContent>
         <Text>{formatMinutes(sessionTotalSeconds(session))}</Text>
-      </ListItem.TrailingContent>
-    </ListItem>
+      </Island.ListItem.TrailingContent>
+    </Island.ListItem>
   );
 }

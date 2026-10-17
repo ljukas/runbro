@@ -2,6 +2,7 @@ import { IslandButton } from './button';
 import { IslandHost } from './host';
 import { IslandIconButton } from './icon-button';
 import { IslandLabel } from './label';
+import { IslandListItem } from './list-item';
 import { IslandText } from './text';
 import { IslandView } from './view';
 
@@ -16,5 +17,6 @@ export const Island = Object.assign(IslandHost, {
   Label: IslandLabel,
   Button: IslandButton,
   IconButton: IslandIconButton,
+  ListItem: IslandListItem,
   View: IslandView,
 });

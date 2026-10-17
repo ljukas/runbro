@@ -1,4 +1,4 @@
-import { LazyColumn, ListItem, Text } from '@expo/ui/jetpack-compose';
+import { LazyColumn, Text } from '@expo/ui/jetpack-compose';
 import { background, clickable, fillMaxSize } from '@expo/ui/jetpack-compose/modifiers';
 import { desc } from 'drizzle-orm';
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
@@ -57,7 +57,7 @@ export default function LogScreen() {
             run.distanceM ? formatDistanceKm(run.distanceM) : null,
           ].filter((part): part is string => part !== null);
           return (
-            <ListItem
+            <Island.ListItem
               key={run.id}
               modifiers={[
                 clickable(() =>
@@ -65,16 +65,16 @@ export default function LogScreen() {
                 ),
               ]}
             >
-              <ListItem.HeadlineContent>
+              <Island.ListItem.HeadlineContent>
                 <Text>{rowTitle(run.sessionKey)}</Text>
-              </ListItem.HeadlineContent>
-              <ListItem.SupportingContent>
+              </Island.ListItem.HeadlineContent>
+              <Island.ListItem.SupportingContent>
                 <Text>{details.join(' · ')}</Text>
-              </ListItem.SupportingContent>
-              <ListItem.TrailingContent>
+              </Island.ListItem.SupportingContent>
+              <Island.ListItem.TrailingContent>
                 <Text>{formatClock(run.activeDurationS)}</Text>
-              </ListItem.TrailingContent>
-            </ListItem>
+              </Island.ListItem.TrailingContent>
+            </Island.ListItem>
           );
         })}
       </LazyColumn>
