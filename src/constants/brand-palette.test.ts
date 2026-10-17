@@ -80,8 +80,21 @@ describe('brand palette', () => {
     expect(palette.gradient).toEqual({
       from: from.color,
       to: to.color,
-      angleDeg: Number.parseInt(brand.gradient.angle, 10),
+      on: brand.colors.textOnGradient,
     });
+    expect([from.offset, to.offset]).toEqual([0, 1]);
+    // why: the hero draws corner to corner, which is only 135 degrees on a square.
+    expect(Number.parseInt(brand.gradient.angle, 10)).toBe(135);
+  });
+
+  it("app.json's brand colours come from the palette", () => {
+    const app = JSON.parse(readFileSync(join(import.meta.dir, '../../app.json'), 'utf8')).expo;
+    const splash = app.plugins.find(
+      (p: unknown) => Array.isArray(p) && p[0] === 'expo-splash-screen',
+    );
+    expect(app.primaryColor).toBe(palette.scheme.light.primary);
+    expect(splash[1].backgroundColor).toBe(palette.seed);
+    expect(app.android.adaptiveIcon.backgroundColor).toBe(palette.seed);
   });
 
   it('every data colour clears 3:1 on every background of its surface', () => {

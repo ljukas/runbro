@@ -3,7 +3,7 @@
   "gradient": {
     "from": "#FFB224",
     "to": "#FF4256",
-    "angleDeg": 135
+    "on": "#FFFFFF"
   },
   "scheme": {
     "light": {

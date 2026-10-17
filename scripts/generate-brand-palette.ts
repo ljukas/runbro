@@ -23,7 +23,7 @@ export type BrandAccent = Record<
 
 export type BrandPalette = {
   seed: string;
-  gradient: { from: string; to: string; angleDeg: number };
+  gradient: { from: string; to: string; on: string };
   scheme: Record<'light' | 'dark', Record<keyof MaterialColors, string>>;
   segments: Record<'light' | 'dark', Record<'run' | 'walk' | 'warmupCooldown' | 'stopped', string>>;
   stats: Record<'light' | 'dark', Record<'pace' | 'elevation', string>>;
@@ -44,7 +44,7 @@ const ACCENT: BrandAccent = {
 };
 
 // Decoration, not a token: docs/brand/brand.json's sunrise, identical in both schemes.
-const GRADIENT = { from: '#FFB224', to: '#FF4256', angleDeg: 135 };
+const GRADIENT = { from: '#FFB224', to: '#FF4256', on: '#FFFFFF' };
 
 const SEGMENTS = {
   run: { light: '#C75115', dark: '#FF7A3D' },

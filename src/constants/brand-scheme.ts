@@ -10,6 +10,8 @@ palette.scheme.dark satisfies Record<keyof MaterialColors, string>;
 
 export const BRAND_SEED: string = palette.seed;
 
+export const BRAND_GRADIENT: (typeof palette)['gradient'] = palette.gradient;
+
 export function brandScheme(scheme: 'light' | 'dark'): MaterialRoles {
   return palette.scheme[scheme];
 }
