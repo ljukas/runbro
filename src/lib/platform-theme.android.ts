@@ -2,7 +2,7 @@ import { Uniwind } from 'uniwind';
 
 import { materialTheme, type Scheme } from '@/constants/material-theme';
 
-/** Material palette → Uniwind CSS variables (ADR 0025 §4). Call once at module scope, before the first frame. */
+/** Generated brand scheme → Uniwind CSS variables (ADR 0027 §4). Both schemes are pushed at launch so a runtime theme flip recolours without a relaunch. */
 export function applyPlatformTheme(): void {
   for (const scheme of ['light', 'dark'] as const satisfies readonly Scheme[]) {
     const c = materialTheme(scheme);
