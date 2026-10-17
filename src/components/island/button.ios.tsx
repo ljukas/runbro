@@ -57,8 +57,8 @@ export function IslandButton({
 }) {
   const { fill: fillColor, onFill } = useAccentColors();
 
-  // Unlike the icon button, the bordered styles dim themselves when disabled:
-  // the label carries no explicit foreground color to outrank the treatment.
+  // why: an explicit label foreground outranks SwiftUI's disabled dimming, so a
+  // disabled primary omits it (the bordered variants never set one).
   const modifiers =
     variant === 'primary'
       ? [
@@ -73,7 +73,7 @@ export function IslandButton({
   // why: the fill turns pale in increased-contrast dark, so the primary label
   // must name its own foreground instead of keeping SwiftUI's white.
   const labelModifiers = [
-    ...(variant === 'primary' ? [foregroundStyle(onFill)] : []),
+    ...(variant === 'primary' && !disabled ? [foregroundStyle(onFill)] : []),
     ...(fill
       ? [
           font({ textStyle: 'body', weight: 'semibold' }),
