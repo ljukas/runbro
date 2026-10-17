@@ -405,3 +405,5 @@ element surface today.
 - The asset-catalog colours compile as specified. The tab bar, `List` buttons, the primary CTA (glass on 26, `borderedProminent` on 17.5, black label in increased-contrast dark), the progress bar, the onboarding symbols and the up-next arrow follow them.
 - Named colours re-resolve live: a light/dark or contrast switch recolours symbols already on screen.
 - On iOS 26, Liquid Glass bar buttons ignore the accent. The back button's glass pill and the `Stack.Toolbar` buttons (the summary's and the map's Close) draw in the label colour in every state. That is the system's monochrome toolbar style and agrees with "minimize its use on controls", so the app doesn't work around it. `navigationTheme()` keeps the accent hex for runtimes before iOS 26.
+
+**Stage 4 note.** The Android welcome hero's sunrise gradient was verified clipped (light, dark, font scale 2.0). D1 (PNG icon) and D2 (same splash in both schemes) landed as the plan recommended.

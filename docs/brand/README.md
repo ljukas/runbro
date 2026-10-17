@@ -5,9 +5,7 @@ The **Dash R** mark: a white italic R with three speed dashes on a sunrise gradi
 concepts. It is about running and the RunBro name, not about Couch to 5K, because
 the plan is only the first of many the app will carry.
 
-**Status:** designed, not yet in the app. The app still ships Expo's template icon
-and splash, and its colours do not follow this palette yet. The work to change that
-is tracked in the [roadmap](../roadmap/README.md).
+**Status:** the icon, splash and palette are in the app, built on `ll/brand-palette` and shipping with the brand-colours release. See the [roadmap](../roadmap/README.md).
 
 ![Overview](exports/final-sheet.png)
 
