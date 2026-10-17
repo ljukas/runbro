@@ -1,4 +1,4 @@
-import { DashPathEffect, matchFont, Rect } from '@shopify/react-native-skia';
+import { DashPathEffect, Line as SkiaLine, matchFont, Rect, vec } from '@shopify/react-native-skia';
 import { useMemo } from 'react';
 import { PixelRatio, View } from 'react-native';
 import { CartesianChart, Line } from 'victory-native';
@@ -77,12 +77,18 @@ const BAND_STRIP_HEIGHT = { run: 4, walk: 2 } as const;
 // victory's default x `labelOffset` (`axisDefaults.ts`), plus room for the strip above the labels
 const X_LABEL_OFFSET_WITH_BANDS = 2 + BAND_STRIP_HEIGHT.run + 2;
 const STOP_MARKER_WIDTH = 2;
+// why dashed: a mark under 3 pt must differ in form, not only hue (ADR 0027 §5)
+const STOP_DASH = [3, 3];
 // why a fixed width: a GPS silence covers no distance, so it has none of its own on this axis
 const SILENCE_ZONE_WIDTH = 10;
 const SILENCE_ZONE_OPACITY = 0.18;
 
 // why clamped: points sit at bucket centres, so the axis starts half a bucket in and a marker at
 // 0 m would fall wholly outside the clipped plot
+function markerCentre(centre: number, width: number, bounds: { left: number; right: number }) {
+  return markerLeft(centre, width, bounds) + width / 2;
+}
+
 function markerLeft(centre: number, width: number, bounds: { left: number; right: number }) {
   return Math.min(Math.max(centre, bounds.left + width / 2), bounds.right - width / 2) - width / 2;
 }
@@ -203,14 +209,18 @@ export function RunProfileChart({
               />
             ))}
             {bands?.stopsAtM.map((atM, index) => (
-              <Rect
+              <SkiaLine
                 key={`stop-${index}`}
-                x={markerLeft(xScale(atM), STOP_MARKER_WIDTH, chartBounds)}
-                y={chartBounds.top}
-                width={STOP_MARKER_WIDTH}
-                height={chartBounds.bottom - chartBounds.top}
+                p1={vec(markerCentre(xScale(atM), STOP_MARKER_WIDTH, chartBounds), chartBounds.top)}
+                p2={vec(
+                  markerCentre(xScale(atM), STOP_MARKER_WIDTH, chartBounds),
+                  chartBounds.bottom,
+                )}
+                strokeWidth={STOP_MARKER_WIDTH}
                 color={segment.stopped}
-              />
+              >
+                <DashPathEffect intervals={STOP_DASH} />
+              </SkiaLine>
             ))}
             {/* Drawn first so pace, the run's primary measure, stays on top. */}
             {elevationDomain ? (

@@ -16,7 +16,7 @@ import {
   type RunRouteGeometry,
   type SummaryElevation,
 } from '@/domain/run-summary';
-import { useSegmentColors } from '@/hooks/use-theme';
+import { useSegmentColors, useTheme } from '@/hooks/use-theme';
 
 interface ReadyRoute {
   ready: true;
@@ -45,6 +45,7 @@ type RunTotals = Pick<Run, 'sessionKey' | 'distanceM' | 'activeDurationS' | 'eve
 
 function useStyledRoute(geometry: RunRouteGeometry | null, segments: readonly RunSegment[]) {
   const segmentColors = useSegmentColors();
+  const casingColor = useTheme().background;
   return useMemo(
     () =>
       geometry
@@ -52,10 +53,10 @@ function useStyledRoute(geometry: RunRouteGeometry | null, segments: readonly Ru
             ready: true as const,
             bbox: geometry.bbox,
             endpoints: geometry.endpoints,
-            route: { lines: toRouteLines(geometry.chunks, segments, segmentColors) },
+            route: { lines: toRouteLines(geometry.chunks, segments, segmentColors, casingColor) },
           }
         : { ready: false as const },
-    [geometry, segments, segmentColors],
+    [geometry, segments, segmentColors, casingColor],
   );
 }
 
