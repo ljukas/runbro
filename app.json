@@ -72,6 +72,7 @@
           "updateUsageDescription": "Save your completed runs (duration, distance, route) to Apple Health."
         }
       ],
+      "./plugins/with-brand-colors",
       [
         "expo-build-properties",
         {
