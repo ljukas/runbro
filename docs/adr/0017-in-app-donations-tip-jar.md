@@ -10,7 +10,7 @@ Accepted (2026-07-14, on merge of #34). Not yet implemented.
 
 ## Context
 
-My Runner is free with no monetization (`AGENTS.md`). The goal is narrow: let a
+RunBro is free with no monetization (`AGENTS.md`). The goal is narrow: let a
 small fraction of users optionally chip in enough to offset the one fixed cost —
 the ~$99/yr Apple Developer membership — without turning the app into a paid or
 freemium product. The feature was researched through the feasibility and

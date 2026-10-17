@@ -2,7 +2,7 @@
 
 Date: 2026-07-12
 Status: **research / options under consideration** — no decision made. Each flow below is a
-candidate for how my-runner versions itself, generates changelogs, and triggers deploys.
+candidate for how RunBro versions itself, generates changelogs, and triggers deploys.
 
 ## Shared foundation (applies to every flow)
 
@@ -98,7 +98,7 @@ messages.
 
 ```json
 {
-  "changelog": ["@changesets/changelog-github", { "repo": "<owner>/my-runner" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "<owner>/runbro" }],
   "commit": false,
   "baseBranch": "main",
   "privatePackages": { "version": true, "tag": true }

@@ -102,5 +102,5 @@ and is enforced as a **required status check** via the repo's existing
 
 1. Open a PR with the workflow; confirm the `checks` job runs and passes.
 2. Confirm the PR shows `checks` as **required** and merge is blocked until green.
-3. `gh api repos/ljukas/my-runner/rulesets/18800808` shows the
+3. `gh api repos/ljukas/runbro/rulesets/18800808` shows the
    `required_status_checks` rule.

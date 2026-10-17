@@ -7,8 +7,8 @@ Status: Proposed — draft for review.
 ## Problem
 
 The `development` (dev-client) build and the `e2e-simulator` build both ship the
-same iOS `bundleIdentifier` (`se.lukaslindqvist.myrunner`) and the same display
-name (`my-runner`). Because iOS keys installed apps by bundle identifier,
+same iOS `bundleIdentifier` (`se.lukaslindqvist.runbro`) and the same display
+name (`RunBro`). Because iOS keys installed apps by bundle identifier,
 installing one **overwrites** the other — you cannot keep a working dev client and
 the E2E build on the same simulator or phone at once, and even when only one is
 present there is no visible cue on the home screen telling you which build it is.
@@ -24,7 +24,7 @@ fingerprint machinery.
 ## Non-goals
 
 - No new identity for `preview` or `production` — they keep the clean
-  `se.lukaslindqvist.myrunner` / `my-runner` identity (chosen scope: dev + e2e
+  `se.lukaslindqvist.runbro` / `RunBro` identity (chosen scope: dev + e2e
   only). Production identity staying fixed is a hard requirement for releases.
 - No custom per-variant icons — all variants use the current default Expo icon.
   (Distinct icons are a deferred nice-to-have; distinct names are enough.)
@@ -63,18 +63,18 @@ identity), which is the critical default so store/OTA builds are never suffixed.
 
 | `APP_VARIANT` | `name` (home-screen label) | `ios.bundleIdentifier` / `android.package` | `scheme` |
 | --- | --- | --- | --- |
-| *(unset)* | `my-runner` | `se.lukaslindqvist.myrunner` | `myrunner` |
-| `development` | `my-runner.dev` | `se.lukaslindqvist.myrunner.dev` | `myrunnerdev` |
-| `e2e` | `my-runner.e2e` | `se.lukaslindqvist.myrunner.e2e` | `myrunnere2e` |
+| *(unset)* | `RunBro` | `se.lukaslindqvist.runbro` | `runbro` |
+| `development` | `RunBro.dev` | `se.lukaslindqvist.runbro.dev` | `runbrodev` |
+| `e2e` | `RunBro.e2e` | `se.lukaslindqvist.runbro.e2e` | `runbroe2e` |
 
 `slug` (`runtastic`) and every EAS-project-identifying field are unchanged across
 all rows.
 
 **Cosmetic caveat (accepted):** iOS truncates home-screen labels at ~11 characters,
-so `my-runner.dev` / `my-runner.e2e` will likely render on the springboard as
-`my-runner.d…` and be hard to tell apart *there*; the full name is still shown in
+so `RunBro.dev` / `RunBro.e2e` will likely render on the springboard as
+`RunBro.d…` and be hard to tell apart *there*; the full name is still shown in
 the App Switcher, Settings, and long-press. The user accepted the trailing-suffix
-form over a front-loaded marker (e.g. `dev·my-runner`).
+form over a front-loaded marker (e.g. `dev·RunBro`).
 
 ## Components / changes
 
@@ -143,7 +143,7 @@ so this only affects the local build, never committed native projects.
 
 ### 4. Maestro `appId` — `.maestro/tests/*.yaml`
 
-The E2E build's bundle id becomes `se.lukaslindqvist.myrunner.e2e`, so every flow's
+The E2E build's bundle id becomes `se.lukaslindqvist.runbro.e2e`, so every flow's
 `appId:` field must change to match
 ([ADR 0016](../../adr/0016-text-first-maestro-selectors.md) selectors are
 unaffected — only the `appId` header changes). This is required for the suite to
@@ -168,13 +168,13 @@ is inlined in JS and does not feed the native fingerprint).
 
 ### 6. Documentation & memory ripples
 
-- **AGENTS.md** — the E2E section states the `appId` is `se.lukaslindqvist.myrunner`
+- **AGENTS.md** — the E2E section states the `appId` is `se.lukaslindqvist.runbro`
   set as both `ios.bundleIdentifier` and `android.package`. Update it to record that
-  the *e2e build* uses `se.lukaslindqvist.myrunner.e2e`, and add a short "app
+  the *e2e build* uses `se.lukaslindqvist.runbro.e2e`, and add a short "app
   variants" note (dev/e2e/default identity, driven by `APP_VARIANT`).
-- **Verify skill / memory** — the dev-client deep link becomes `myrunnerdev://`
-  (was `myrunner://`) and the dev bundle id `…myrunner.dev`; update the
-  `myrunner-devclient-verify-quirks` memory and any verify-skill doc that hardcodes
+- **Verify skill / memory** — the dev-client deep link becomes `runbrodev://`
+  (was `runbro://`) and the dev bundle id `…runbro.dev`; update the
+  `runbro-devclient-verify-quirks` memory and any verify-skill doc that hardcodes
   the scheme/bundle id.
 - **ADR 0019** (this decision) is added to the ADR index in AGENTS.md.
 
@@ -216,12 +216,12 @@ build-configuration only — no unit-testable logic:
 2. Build the e2e variant (`eas build --local -p ios -e e2e-simulator`) and install it
    onto the *same* simulator.
 3. Confirm **both** apps are present simultaneously with distinct names
-   (`my-runner.dev` and `my-runner.e2e`) and distinct bundle ids.
+   (`RunBro.dev` and `RunBro.e2e`) and distinct bundle ids.
 4. Run the full Maestro suite (`maestro test .maestro/`) against the `.e2e` `appId`
    and confirm it passes unchanged — proving the e2e build is correctly identified
    and the compressed plan still works.
 5. Confirm a plain `production`/`preview` config resolution still yields the clean
-   `se.lukaslindqvist.myrunner` / `my-runner` identity (e.g. `npx expo config` with
+   `se.lukaslindqvist.runbro` / `RunBro` identity (e.g. `npx expo config` with
    `APP_VARIANT` unset).
 
 ## Risks / open questions

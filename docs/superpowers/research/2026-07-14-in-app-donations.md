@@ -3,7 +3,7 @@
 Date: 2026-07-14
 Status: **research / options under consideration** — not a decision to build.
 
-**Question:** Can My Runner accept optional user donations to offset its running
+**Question:** Can RunBro accept optional user donations to offset its running
 cost (the $99/yr Apple Developer fee) while staying 100% free, on-device, and
 App-Store-compliant — and which mechanism (in-app purchase vs. external link)
 fits the local-first constraints and the "100% free" positioning?
@@ -28,7 +28,7 @@ fits the local-first constraints and the "100% free" positioning?
 
 ## Context
 
-My Runner is free with no monetization (`AGENTS.md`). The owner's goal is narrow:
+RunBro is free with no monetization (`AGENTS.md`). The owner's goal is narrow:
 let a small fraction of users optionally chip in enough to cover the one fixed
 cost — the Apple Developer membership — without turning the app into a paid or
 freemium product. Every feature must remain free; the money button must be
@@ -49,7 +49,7 @@ the roadmap for after the current stages. Subsystems / decisions it touches:
   existing `ui/`/`island/` primitives; no new visual system.
 - **CNG / `app.json`** — IAP requires a **development build** (custom native code),
   a config plugin, and App Store Connect / Play Console product configuration. The
-  `ios.bundleIdentifier` / `android.package` (`se.lukaslindqvist.myrunner`) are
+  `ios.bundleIdentifier` / `android.package` (`se.lukaslindqvist.runbro`) are
   already set.
 - **Store metadata** — interacts directly with the "100% free" positioning (see
   the App Store-presentation finding below).
@@ -85,7 +85,7 @@ the roadmap for after the current stages. Subsystems / decisions it touches:
   accurate; **"no in-app purchases" would be false** (the badge proves otherwise)
   and rejectable. 2.3.2 requires disclosing what IAPs are for — naming the tip
   satisfies that; 2.3.7 keeps promotional/price words like "free" out of the app
-  *name* (fine — the app is "My Runner", not "My Runner Free"). ([Guidelines 2.3.2 / 2.3.7](https://developer.apple.com/app-store/review/guidelines/), verified 2026-07-14; [metadata-rejection guidance](https://shopapper.com/fix-app-store-metadata-rejection-guideline-5-2-1-2-3-7/), 2026-07-14.) Net: the app can still brag *"100% free — every feature, no paywalls, no ads; the only in-app purchase is an optional tip that unlocks nothing."*
+  *name* (fine — the app is "RunBro", not "RunBro Free"). ([Guidelines 2.3.2 / 2.3.7](https://developer.apple.com/app-store/review/guidelines/), verified 2026-07-14; [metadata-rejection guidance](https://shopapper.com/fix-app-store-metadata-rejection-guideline-5-2-1-2-3-7/), 2026-07-14.) Net: the app can still brag *"100% free — every feature, no paywalls, no ads; the only in-app purchase is an optional tip that unlocks nothing."*
 
 ### External-link donations avoid the badge but are US-only and legally unsettled
 

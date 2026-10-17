@@ -156,7 +156,7 @@ The session's segment timeline is a prefix-sum over planned durations, adjusted 
 ```jsonc
 {
   "ios": {
-    "bundleIdentifier": "se.lukaslindqvist.myrunner"   // personal namespace, never se.bovra.*
+    "bundleIdentifier": "se.lukaslindqvist.runbro"   // personal namespace, never se.bovra.*
   },
   "plugins": [
     ["expo-location", {

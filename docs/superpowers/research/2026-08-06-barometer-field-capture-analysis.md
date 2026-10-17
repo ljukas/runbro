@@ -575,7 +575,7 @@ auto-completed at the hour while the phone was untouched and backgrounded, and
 the app was afterwards black and unresponsive. The capture pipeline was
 unaffected — the run finalized, persisted all 3380 samples and exported cleanly —
 so this is a UI-layer failure on an unattended auto-complete. Filed as
-[issue #60](https://github.com/ljukas/my-runner/issues/60); the `lifecycle` rows
+[issue #60](https://github.com/ljukas/runbro/issues/60); the `lifecycle` rows
 this slice added are what identified it, since they show this is the only capture
 of eight that finalized with no visible window.
 
@@ -655,7 +655,7 @@ Extend as captures arrive. Full metrics per row live in
 | **7 — settling** | `…-246a1081` | 2026-08-10 | **`field-test`** | 339 | 1.065 s | — | 0 | — | lag confirmed; top bracket spoiled by a heat pump (§6c) |
 | — (verification) | `…-d2e6a7b8` | 2026-08-07 | plan `w4d2` | 1718 | 1.065 s | 99.3% | 0 | −1.36 m | cadence + item 7 replication (§6d) |
 | — (verification) | `…-2d8d4091` | 2026-08-08 | plan `w4d1` | 1693 | 1.065 s | 99.5% | 0 | −0.29 m | replication; repeatability pair (§6d) |
-| **8 — stationary #2** | `…-bb35dbab` | 2026-08-11 | **`field-test`** | 3380 | 1.065 s | 99.2% | 0 | **−5.02 m** | ~5 m/h drift is typical, not extreme (§6e); surfaced [#60](https://github.com/ljukas/my-runner/issues/60) |
+| **8 — stationary #2** | `…-bb35dbab` | 2026-08-11 | **`field-test`** | 3380 | 1.065 s | 99.2% | 0 | **−5.02 m** | ~5 m/h drift is typical, not extreme (§6e); surfaced [#60](https://github.com/ljukas/runbro/issues/60) |
 | 3 — flat loop | | | | | | | | | phantom gain under motion |
 | 4 — flat repeat | | | | | | | | | repeatability |
 | 5 — hilly + pause | | | | | | | | | rebase-at-pause, gap distribution |

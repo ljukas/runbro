@@ -51,7 +51,7 @@ Top to bottom, mirroring the reference screenshots:
    Title metrics (34 pt bold — the existing `ThemedText` `title` type is 48 pt,
    too big; use explicit classes):
    - "Welcome to" in `text-primary`
-   - "My Runner" in `text-foreground`
+   - "RunBro" in `text-foreground`
 3. **Feature rows** — three rows of tinted SF Symbol (primary color) + bold
    title + secondary description, Apple Games style:
    | Symbol (iOS / Android) | Title | Description |
