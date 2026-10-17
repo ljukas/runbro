@@ -2,7 +2,7 @@
 
 Date: 2026-07-13
 Status: **decided — implemented via ADR 0014** ([0014-eslint-prettier-linting-stack.md](../../adr/0014-eslint-prettier-linting-stack.md)). Evaluates linter choices for
-my-runner; the recommendation shipped in the same PR as this doc.
+RunBro; the recommendation shipped in the same PR as this doc.
 
 ## Current state (verified in-repo)
 

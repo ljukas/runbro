@@ -72,7 +72,7 @@ embedded, `__DEV__ === false`, no Metro, no signing) and carries the flag:
 - `autoIncrement: false` → the E2E build never mutates the remote build number.
 - `env.EXPO_PUBLIC_E2E` lives here and **only** here, so `preview`/`production`
   store builds never receive it.
-- The build keeps the same `appId` (`se.lukaslindqvist.myrunner`) so Maestro
+- The build keeps the same `appId` (`se.lukaslindqvist.runbro`) so Maestro
   flows need no `appId` change.
 
 ### 2. Compressed-plan reachability — product code (helper, not inline)

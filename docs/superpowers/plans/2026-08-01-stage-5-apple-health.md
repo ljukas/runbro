@@ -1480,7 +1480,7 @@ You can turn this off at any time in the Health app.
 
 ## Contact
 
-Open an issue at https://github.com/lukaslindqvist/my-runner.
+Open an issue at https://github.com/ljukas/runbro.
 ```
 
 Correct the repository URL if it differs from the one in `git remote -v`.

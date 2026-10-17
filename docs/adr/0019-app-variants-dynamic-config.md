@@ -12,7 +12,7 @@ Full design and verification plan:
 ## Context
 
 The `development` (dev-client) build and the `e2e-simulator` build both ship the
-same iOS `bundleIdentifier` (`se.lukaslindqvist.myrunner`) and display name, so
+same iOS `bundleIdentifier` (`se.lukaslindqvist.runbro`) and display name, so
 installing one **overwrites** the other — you cannot keep a working dev client and
 the E2E build on one simulator or phone at once, and neither carries a home-screen
 cue for which build it is. We want dev and e2e installable side-by-side, each with
@@ -50,9 +50,9 @@ is **dev + e2e only**; `preview`/`production` keep the clean identity.
 
 | `APP_VARIANT` | `name` | `ios.bundleIdentifier` / `android.package` | `scheme` |
 | --- | --- | --- | --- |
-| *(unset)* | `my-runner` | `se.lukaslindqvist.myrunner` | `myrunner` |
-| `development` | `my-runner.dev` | `se.lukaslindqvist.myrunner.dev` | `myrunnerdev` |
-| `e2e` | `my-runner.e2e` | `se.lukaslindqvist.myrunner.e2e` | `myrunnere2e` |
+| *(unset)* | `RunBro` | `se.lukaslindqvist.runbro` | `runbro` |
+| `development` | `RunBro.dev` | `se.lukaslindqvist.runbro.dev` | `runbrodev` |
+| `e2e` | `RunBro.e2e` | `se.lukaslindqvist.runbro.e2e` | `runbroe2e` |
 
 1. **`app.config.ts` overrides only identity.** It spreads `config` (and
    `config.ios` / `config.android`) so `infoPlist`, icons, plugins, and every other
@@ -64,7 +64,7 @@ is **dev + e2e only**; `preview`/`production` keep the clean identity.
    `e2e-simulator` → `e2e`, alongside its existing `EXPO_PUBLIC_E2E`) and in the
    local dev-client scripts (`APP_VARIANT=development expo run:ios`).
    `preview`/`production` set nothing.
-3. **The e2e `appId` moves to `se.lukaslindqvist.myrunner.e2e`,** so every
+3. **The e2e `appId` moves to `se.lukaslindqvist.runbro.e2e`,** so every
    `.maestro/tests/*.yaml` `appId:` updates to match; the CI E2E workflow sets
    `APP_VARIANT=e2e` job-wide so the fingerprint cache key matches the built app.
 4. **`app.json` stays a JSON file** so release-please keeps owning `version`
@@ -97,8 +97,8 @@ sequencing*).
   full name still shows in the App Switcher/Settings (accepted trade-off).
 - **Switching variants locally** needs `expo prebuild --clean` (bundle id is native),
   a minor dev-loop cost; `/ios`/`/android` are gitignored CNG so nothing is committed.
-- **Deep-link/verify ripple:** the dev client's scheme becomes `myrunnerdev://`;
-  verify-skill docs and memory that hardcode `myrunner://` are updated.
+- **Deep-link/verify ripple:** the dev client's scheme becomes `runbrodev://`;
+  verify-skill docs and memory that hardcode `runbro://` are updated.
 
 ## Alternatives considered
 

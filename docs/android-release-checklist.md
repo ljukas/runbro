@@ -74,10 +74,17 @@ Internal testing does not need these: build 3 was published to internal testers
 drafts. Complete them before the first closed, open or production release.
 
 - [ ] **Privacy policy URL.** Must be a public web page (the in-app `privacy`
-      route from stage 5 does not count). It needs to cover location, Health
-      Connect writes and the fact that nothing leaves the device.
-- [ ] **Data safety.** No data is collected or shared: everything stays on the
-      device, and iCloud / device backup is the only copy. Declare location and
+      route from stage 5 does not count). `docs/privacy-policy.md` is published
+      by `.github/workflows/privacy-policy.yml` to
+      `https://ljukas.github.io/runbro/privacy-policy/`. Before entering it, rename the
+      repo to `runbro` (Pages URLs do not redirect after a rename), set Settings →
+      Pages → Source to *GitHub Actions*, run the workflow and open the URL. The
+      contact address `runbro@lukaslindqvist.se` must be receiving mail.
+- [ ] **Data safety.** The app itself collects and shares nothing: everything stays on the
+      device, and iCloud / device backup is the only copy. The Maps SDK is the exception the
+      form must still answer for: it sends Google crash data, device metadata, the IP address
+      and a pseudonymous ID (<https://developers.google.com/maps/documentation/android-sdk/play-data-disclosure>),
+      so check that page's guidance on what to declare. Declare location and
       health & fitness data as *processed on device only* according to Google's
       current definitions, and re-check the form when anything starts leaving the
       device.

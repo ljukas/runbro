@@ -410,4 +410,4 @@ The six:
 | 5 | Hilly loop + pause | | | pocket: | | | pause: __ min |
 | 6 | Flat loop, in hand | | | hand | | | |
 | ~~7~~ | ~~Settling~~ **DONE** | 2026-08-10 | — | in hand | `runbro-20260810-1054-246a1081.txt` | — | 339 samples · lag confirmed (99%/89% dwelled vs 79%/69% moving) · **top bracket spoiled by the top-floor heat pump** |
-| ~~8~~ | ~~Stationary #2~~ **DONE** | 2026-08-11 | rising 0.575 hPa/h | on desk | `runbro-20260811-0756-bb35dbab.txt` | — | 60.0 min · 3380 samples · **drift −4.79 m/h** · day was not calm · froze the app on auto-complete ([#60](https://github.com/ljukas/my-runner/issues/60)) |
+| ~~8~~ | ~~Stationary #2~~ **DONE** | 2026-08-11 | rising 0.575 hPa/h | on desk | `runbro-20260811-0756-bb35dbab.txt` | — | 60.0 min · 3380 samples · **drift −4.79 m/h** · day was not calm · froze the app on auto-complete ([#60](https://github.com/ljukas/runbro/issues/60)) |

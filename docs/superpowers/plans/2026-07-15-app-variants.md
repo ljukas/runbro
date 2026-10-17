@@ -12,9 +12,9 @@
 
 - **Design source:** `docs/superpowers/specs/2026-07-15-app-variants-design.md` and `docs/adr/0019-app-variants-dynamic-config.md`. Read both first.
 - **Identity table (verbatim):**
-  - unset → name `my-runner`, bundle id `se.lukaslindqvist.myrunner`, scheme `myrunner`
-  - `development` → name `my-runner.dev`, bundle id `se.lukaslindqvist.myrunner.dev`, scheme `myrunnerdev`
-  - `e2e` → name `my-runner.e2e`, bundle id `se.lukaslindqvist.myrunner.e2e`, scheme `myrunnere2e`
+  - unset → name `RunBro`, bundle id `se.lukaslindqvist.runbro`, scheme `runbro`
+  - `development` → name `RunBro.dev`, bundle id `se.lukaslindqvist.runbro.dev`, scheme `runbrodev`
+  - `e2e` → name `RunBro.e2e`, bundle id `se.lukaslindqvist.runbro.e2e`, scheme `runbroe2e`
 - **Do NOT change** `slug` (`runtastic`), `owner`, `extra.eas.projectId`, or `updates.url` — one EAS project across all variants.
 - **`app.json` stays a JSON file** — release-please owns its `version` field (ADR 0012). `app.config.ts` only augments; never delete or rename `app.json`.
 - **Production/preview must resolve to the clean identity** — never set `APP_VARIANT` in the `preview` or `production` profiles.
@@ -22,7 +22,7 @@
 - **Baseline of `main` at branch-off** (verify still current):
   - `eas.json` build profiles: `development` (developmentClient, internal, device), `development-simulator` (extends `development`, `ios.simulator`), `preview`, `internal`, `e2e-simulator` (extends `preview`, `ios.simulator`, `env.EXPO_PUBLIC_E2E=1`), `production`.
   - `package.json` scripts: `"start": "expo start"`, `"android": "expo run:android"`, `"ios": "expo run:ios"`.
-  - `app.json`: `name` `my-runner`, `scheme` `myrunner`, `ios.bundleIdentifier` / `android.package` `se.lukaslindqvist.myrunner`.
+  - `app.json`: `name` `RunBro`, `scheme` `runbro`, `ios.bundleIdentifier` / `android.package` `se.lukaslindqvist.runbro`.
 - **Worktree setup:** run `bun ci` (or `bun install`) once before any `expo`/`eas`/`typecheck` command — the worktree starts without `node_modules`. `bun run typecheck` additionally needs the gitignored `expo-env.d.ts` and `.expo/types/router.d.ts`; if missing, run `bun expo start --port 8099` and kill it as soon as `.expo/types/router.d.ts` appears (per AGENTS.md). `npx expo config` does NOT need those generated files.
 - **Commits:** Conventional Commits. Every commit message ends with the trailer:
   `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`
@@ -80,7 +80,7 @@ npx expo config --json | jq '{name, scheme, iosId: .ios.bundleIdentifier, androi
 ```
 Expected:
 ```json
-{ "name": "my-runner", "scheme": "myrunner", "iosId": "se.lukaslindqvist.myrunner", "androidId": "se.lukaslindqvist.myrunner" }
+{ "name": "RunBro", "scheme": "runbro", "iosId": "se.lukaslindqvist.runbro", "androidId": "se.lukaslindqvist.runbro" }
 ```
 
 - [ ] **Step 3: Verify the `development` variant**
@@ -91,7 +91,7 @@ APP_VARIANT=development npx expo config --json | jq '{name, scheme, iosId: .ios.
 ```
 Expected:
 ```json
-{ "name": "my-runner.dev", "scheme": "myrunnerdev", "iosId": "se.lukaslindqvist.myrunner.dev", "androidId": "se.lukaslindqvist.myrunner.dev" }
+{ "name": "RunBro.dev", "scheme": "runbrodev", "iosId": "se.lukaslindqvist.runbro.dev", "androidId": "se.lukaslindqvist.runbro.dev" }
 ```
 
 - [ ] **Step 4: Verify the `e2e` variant**
@@ -102,7 +102,7 @@ APP_VARIANT=e2e npx expo config --json | jq '{name, scheme, iosId: .ios.bundleId
 ```
 Expected:
 ```json
-{ "name": "my-runner.e2e", "scheme": "myrunnere2e", "iosId": "se.lukaslindqvist.myrunner.e2e", "androidId": "se.lukaslindqvist.myrunner.e2e" }
+{ "name": "RunBro.e2e", "scheme": "runbroe2e", "iosId": "se.lukaslindqvist.runbro.e2e", "androidId": "se.lukaslindqvist.runbro.e2e" }
 ```
 
 - [ ] **Step 5: Confirm `infoPlist` / icons / plugins survived the merge**
@@ -131,7 +131,7 @@ git commit -m "feat: add app.config.ts variant resolver (APP_VARIANT identity)" 
 
 **Interfaces:**
 - Consumes: the resolver from Task 1 (reads `APP_VARIANT`).
-- Produces: build profiles and local scripts that set the variant; the e2e profile now builds bundle id `se.lukaslindqvist.myrunner.e2e` (Task 3 depends on this value).
+- Produces: build profiles and local scripts that set the variant; the e2e profile now builds bundle id `se.lukaslindqvist.runbro.e2e` (Task 3 depends on this value).
 
 - [ ] **Step 1: Add `APP_VARIANT=development` to the dev EAS profiles**
 
@@ -203,18 +203,18 @@ git commit -m "build: select dev/e2e app variant via APP_VARIANT in eas.json + s
 - Modify: `.github/workflows/e2e.yml` (add job-level `env: APP_VARIANT: e2e`)
 
 **Interfaces:**
-- Consumes: the e2e bundle id `se.lukaslindqvist.myrunner.e2e` produced by Task 2.
+- Consumes: the e2e bundle id `se.lukaslindqvist.runbro.e2e` produced by Task 2.
 - Produces: a Maestro suite and CI pipeline that target/build the e2e variant consistently.
 
 - [ ] **Step 1: Update every Maestro flow's `appId`**
 
 For each file in `.maestro/tests/` (currently `complete-session.yaml`, `onboarding.yaml`, `run-controls.yaml`) change the header line:
 ```yaml
-appId: se.lukaslindqvist.myrunner
+appId: se.lukaslindqvist.runbro
 ```
 to:
 ```yaml
-appId: se.lukaslindqvist.myrunner.e2e
+appId: se.lukaslindqvist.runbro.e2e
 ```
 Also check `.maestro/helpers/` for any `appId:` (flows referenced via `runFlow:` inherit the caller's `appId`, but replace any explicit ones you find).
 
@@ -268,7 +268,7 @@ git commit -m "test: point Maestro appId + CI fingerprint at the e2e app variant
 
 - [ ] **Step 1: Update the E2E `appId` reference in `AGENTS.md`**
 
-Find the line stating the app launches via `appId` `se.lukaslindqvist.myrunner` (set as `ios.bundleIdentifier` and `android.package`). Amend it to record that the **e2e build** uses `se.lukaslindqvist.myrunner.e2e`, and add one sentence: "App identity is variant-driven via `APP_VARIANT` (ADR 0019): `development` → `…myrunner.dev` / scheme `myrunnerdev`, `e2e` → `…myrunner.e2e` / scheme `myrunnere2e`, unset → the clean production identity."
+Find the line stating the app launches via `appId` `se.lukaslindqvist.runbro` (set as `ios.bundleIdentifier` and `android.package`). Amend it to record that the **e2e build** uses `se.lukaslindqvist.runbro.e2e`, and add one sentence: "App identity is variant-driven via `APP_VARIANT` (ADR 0019): `development` → `…runbro.dev` / scheme `runbrodev`, `e2e` → `…runbro.e2e` / scheme `runbroe2e`, unset → the clean production identity."
 
 - [ ] **Step 2: Add ADR 0019 to the ADR index in `AGENTS.md`**
 
@@ -282,7 +282,7 @@ Under "Design docs & ADRs", after the ADR 0017 line, add:
 
 Run:
 ```bash
-grep -n "myrunner.e2e\|APP_VARIANT\|0019-app-variants" AGENTS.md
+grep -n "runbro.e2e\|APP_VARIANT\|0019-app-variants" AGENTS.md
 ```
 Expected: matches for the e2e appId, the `APP_VARIANT` note, and the ADR 0019 index line.
 
@@ -329,13 +329,13 @@ xcrun simctl install "$UDID" /tmp/e2e/app.app
 
 Run:
 ```bash
-xcrun simctl listapps "$UDID" | grep -o 'se\.lukaslindqvist\.myrunner[^"]*' | sort -u
+xcrun simctl listapps "$UDID" | grep -o 'se\.lukaslindqvist\.runbro[^"]*' | sort -u
 ```
-Expected: both `se.lukaslindqvist.myrunner.dev` and `se.lukaslindqvist.myrunner.e2e` present.
+Expected: both `se.lukaslindqvist.runbro.dev` and `se.lukaslindqvist.runbro.e2e` present.
 
 - [ ] **Step 5: Confirm distinct home-screen names**
 
-Screenshot the home screen via argent (`screenshot`) and visually confirm two apps with names `my-runner.dev` and `my-runner.e2e` (labels may be truncated to `my-runner.d…` / `my-runner.e…` on the springboard — full names appear in the App Switcher/Settings, per the spec's cosmetic caveat).
+Screenshot the home screen via argent (`screenshot`) and visually confirm two apps with names `RunBro.dev` and `RunBro.e2e` (labels may be truncated to `RunBro.d…` / `RunBro.e…` on the springboard — full names appear in the App Switcher/Settings, per the spec's cosmetic caveat).
 
 - [ ] **Step 6: Run the full Maestro suite against the e2e build**
 
@@ -361,8 +361,8 @@ Expected: all flows pass — proving the e2e build is correctly identified by it
 - Docs/AGENTS.md + ADR index → Task 4. ✓
 - Invariants (release-please app.json, single EAS project, per-variant fingerprint) → Global Constraints + Task 1 Step 5 / Task 3 Step 4. ✓
 - Verification (side-by-side install + Maestro) → Task 5. ✓
-- Memory / verify-skill `myrunner://` → dev scheme note: handled outside the repo by the author (memory files live in `~/.claude`); AGENTS.md carries the in-repo record (Task 4). Flagged here so it is not lost.
+- Memory / verify-skill `runbro://` → dev scheme note: handled outside the repo by the author (memory files live in `~/.claude`); AGENTS.md carries the in-repo record (Task 4). Flagged here so it is not lost.
 
 **Placeholder scan:** No TBD/TODO; every code and command step is concrete. The only deferred item is the Global-Constraints reconciliation, which is a deliberate, instructed adjustment (not a placeholder).
 
-**Type consistency:** Identity values (`.dev`/`.e2e`, `myrunnerdev`/`myrunnere2e`, `se.lukaslindqvist.myrunner.*`) are identical across Tasks 1–5 and the Global Constraints table. `APP_VARIANT` values (`development`, `e2e`) are consistent between `app.config.ts`, `eas.json`, scripts, and the workflow.
+**Type consistency:** Identity values (`.dev`/`.e2e`, `runbrodev`/`runbroe2e`, `se.lukaslindqvist.runbro.*`) are identical across Tasks 1–5 and the Global Constraints table. `APP_VARIANT` values (`development`, `e2e`) are consistent between `app.config.ts`, `eas.json`, scripts, and the workflow.
