@@ -3,11 +3,7 @@ import { Colors, type ThemeColor } from './theme';
 
 export type Scheme = 'light' | 'dark';
 
-/**
- * The app's colour tokens filled from the generated brand scheme (ADR 0027 §4, which reverses
- * ADR 0025 §4's wallpaper colour). `success` has no Material role and keeps the shared value.
- */
-export function materialTheme(scheme: Scheme): Record<ThemeColor, string> {
+function build(scheme: Scheme): Record<ThemeColor, string> {
   const m = brandScheme(scheme);
   return {
     text: m.onSurface,
@@ -27,4 +23,16 @@ export function materialTheme(scheme: Scheme): Record<ThemeColor, string> {
     destructive: m.error,
     destructiveForeground: m.onError,
   };
+}
+
+// why module scope: a stable object per scheme keeps useTheme() consumers' memo dependencies and
+// compiler memo blocks from invalidating every render.
+const THEMES: Record<Scheme, Record<ThemeColor, string>> = {
+  light: build('light'),
+  dark: build('dark'),
+};
+
+/** Colour tokens filled from the generated brand scheme (ADR 0027 §4); `success` has no Material role and keeps the shared value. */
+export function materialTheme(scheme: Scheme): Record<ThemeColor, string> {
+  return THEMES[scheme];
 }

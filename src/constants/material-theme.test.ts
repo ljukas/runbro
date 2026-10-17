@@ -19,6 +19,11 @@ describe('materialTheme maps the generated roles', () => {
     expect(t.backgroundCard).toBe('#40322C');
   });
 
+  test('returns the same object per scheme', () => {
+    expect(materialTheme('light')).toBe(materialTheme('light'));
+    expect(materialTheme('dark')).toBe(materialTheme('dark'));
+  });
+
   test('success keeps the shared value', () => {
     expect(materialTheme('light').success).toBe(Colors.light.success);
     expect(materialTheme('dark').success).toBe(Colors.dark.success);
