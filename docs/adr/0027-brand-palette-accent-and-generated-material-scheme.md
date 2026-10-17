@@ -399,3 +399,9 @@ element surface today.
   icon brings the gradient with it.
 - On Android it is the welcome page's clover hero (stage 4).
 - The run summary gets none, because it shows run data (§5).
+
+**Measured on the simulator (stage 2).** iOS 26.5 and 17.5, light, dark and both increased-contrast states.
+
+- The asset-catalog colours compile as specified. The tab bar, `List` buttons, the primary CTA (glass on 26, `borderedProminent` on 17.5, black label in increased-contrast dark), the progress bar, the onboarding symbols and the up-next arrow follow them.
+- Named colours re-resolve live: a light/dark or contrast switch recolours symbols already on screen.
+- On iOS 26, Liquid Glass bar buttons ignore the accent. The back button's glass pill and the `Stack.Toolbar` buttons (the summary's and the map's Close) draw in the label colour in every state. That is the system's monochrome toolbar style and agrees with "minimize its use on controls", so the app doesn't work around it. `navigationTheme()` keeps the accent hex for runtimes before iOS 26.
