@@ -10,6 +10,7 @@ export function applyPlatformTheme(): void {
       '--color-primary': c.primary,
       '--color-primary-foreground': c.primaryForeground,
       '--color-primary-fill': c.primaryFill,
+      '--color-primary-fill-foreground': c.primaryFillForeground,
       '--color-background': c.background,
       '--color-background-element': c.backgroundElement,
       '--color-background-selected': c.backgroundSelected,
