@@ -6,8 +6,8 @@ import { cn } from '@/lib/cn';
 
 /**
  * The app's pill call-to-action (ADR 0013), replacing the former PrimaryButton.
- * `variant` selects a surface + label token pair; `primary` fills with
- * the brand fill pair (ADR 0027 §1); the rest are seeded per ADR 0013 §4. This is the RN counterpart to the
+ * `variant` selects a surface + label token pair; `primary` fills with the brand fill pair
+ * (ADR 0027 §1); the rest are seeded per ADR 0013 §4. This is the RN counterpart to the
  * SwiftUI `Island.Button`. Pass `testID` — it lands on the tappable Pressable.
  */
 export const buttonVariants = cva('items-center justify-center rounded-full', {
