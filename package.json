@@ -49,6 +49,7 @@
     "victory-native": "^41.26.0"
   },
   "devDependencies": {
+    "@material/material-color-utilities": "0.4.0",
     "@swmansion/argent": "0.29.0",
     "@types/bun": "^1.4.2",
     "@types/react": "~19.2.18",

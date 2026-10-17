@@ -1,0 +1,26 @@
+{
+  "primary": {
+    "light": "#BC4A0C",
+    "dark": "#FF7A3D",
+    "lightHighContrast": "#A53C00",
+    "darkHighContrast": "#FFB598"
+  },
+  "primaryForeground": {
+    "light": "#FFFFFF",
+    "dark": "#000000",
+    "lightHighContrast": "#FFFFFF",
+    "darkHighContrast": "#000000"
+  },
+  "primaryFill": {
+    "light": "#BC4A0C",
+    "dark": "#C75115",
+    "lightHighContrast": "#A53C00",
+    "darkHighContrast": "#FFB598"
+  },
+  "primaryFillForeground": {
+    "light": "#FFFFFF",
+    "dark": "#FFFFFF",
+    "lightHighContrast": "#FFFFFF",
+    "darkHighContrast": "#000000"
+  }
+}
