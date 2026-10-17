@@ -34,7 +34,6 @@ export function RunStatGrid({
       />
       <StatGrid.Tile
         icon={{ ios: 'stopwatch.fill', android: 'timer' }}
-        color={stat.activeTime}
         label="Active Time"
         {...clockParts(run.activeDurationS)}
       />
@@ -42,7 +41,6 @@ export function RunStatGrid({
         <>
           <StatGrid.Tile
             icon={{ ios: 'location.fill', android: 'my_location' }}
-            color={stat.distance}
             label="Distance"
             {...distanceParts(distanceM)}
           />

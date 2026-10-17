@@ -18,10 +18,10 @@ export function RunSummaryHeadline({ run, celebrate }: { run: Run; celebrate: bo
       {celebrate ? (
         // P: Body-scale semibold (was 14 px smallBold, smaller than the date it
         // replaces). D: completed wears the green success accent (matching the
-        // Plan completed-checkmarks); partial keeps the primary accent.
+        // Plan completed-checkmarks); partial stays foreground.
         <Text
           variant="default"
-          className={cn('font-semibold', completed ? 'text-success' : 'text-primary')}
+          className={cn('font-semibold', completed ? 'text-success' : 'text-foreground')}
         >
           {completed ? 'Nice work! 🎉' : 'Good effort! 💪'}
         </Text>

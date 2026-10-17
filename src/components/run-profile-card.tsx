@@ -52,25 +52,33 @@ export function RunProfileCard({ run, track }: { run: Run; track: RunTrack }) {
     <Card surface="card" className="gap-3">
       {/* why each unit rides the heading at its axis's side: HIG "Charts" tells a compact chart to
           describe units "in other areas of the chart, such as in a title", and the ticks each unit
-          names render at that edge (pace `axisSide: 'right'`, elevation `'left'`). With both, the
-          units take their lines' tints because colour is what tells the two series apart. */}
+          names render at that edge (pace `axisSide: 'right'`, elevation `'left'`). With both, a
+          swatch in each line's colour keys the unit to its series, so no text rides on a data
+          colour. */}
       <View className="gap-1">
         {withElevation ? title : null}
         <View className="flex-row items-baseline justify-between">
           {withElevation ? (
-            <Text variant="caption" style={{ color: stat.elevation }}>
-              m
-            </Text>
+            <View className="flex-row items-center gap-1">
+              <View
+                className="h-0.5 w-3 rounded-full"
+                style={{ backgroundColor: stat.elevation }}
+              />
+              <Text variant="caption" tone="secondary">
+                m
+              </Text>
+            </View>
           ) : (
             title
           )}
-          <Text
-            variant="caption"
-            tone="secondary"
-            style={withElevation ? { color: stat.pace } : undefined}
-          >
-            min/km
-          </Text>
+          <View className="flex-row items-center gap-1">
+            {withElevation ? (
+              <View className="h-0.5 w-3 rounded-full" style={{ backgroundColor: stat.pace }} />
+            ) : null}
+            <Text variant="caption" tone="secondary">
+              min/km
+            </Text>
+          </View>
         </View>
       </View>
 

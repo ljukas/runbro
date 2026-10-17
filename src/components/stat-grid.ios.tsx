@@ -7,12 +7,13 @@ import { PixelRatio, useWindowDimensions, View } from 'react-native';
 import { Island } from '@/components/island';
 import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
+import { useTheme } from '@/hooks/use-theme';
 import { cn } from '@/lib/cn';
 
 /**
  * A two-column grid of stat tiles (ADR 0013 domain component) for the run
- * summary, styled after Apple Health's summary cards: a header of tinted SF
- * Symbol plus a label in the same tint, then a big number with a smaller gray
+ * summary, styled after Apple Health's summary cards: a header of an SF
+ * Symbol (tinted when the tile has a colour) plus a neutral label, then a big number with a smaller gray
  * lowercase unit beside it. The value row is a SwiftUI island because SF
  * Rounded — Health's metric face — is only reachable as
  * `Font.system(design: .rounded)`; RN's `fontFamily` cannot name it. Tiles
@@ -33,7 +34,7 @@ function StatGridTile({
   /** `full` for a tile that would otherwise sit alone in the grid's last row. */
   width?: 'half' | 'full';
   icon: SymbolViewProps['name'];
-  color: string;
+  color?: string;
   label: string;
   value: string;
   unit: string;
@@ -42,6 +43,7 @@ function StatGridTile({
   // reflow to a single full-width column so the Dynamic-Type value has room.
   const { fontScale } = useWindowDimensions();
   const stacked = fontScale >= 1.6;
+  const colors = useTheme();
   return (
     <Card
       surface="card"
@@ -49,13 +51,17 @@ function StatGridTile({
     >
       <View className="flex-row items-center gap-1.5">
         {/* B: glyph scales with the OS font-size setting instead of a frozen 16 pt. */}
-        <SymbolView name={icon} size={16 * PixelRatio.getFontScale()} tintColor={color} />
-        {/* Label shares the tile's accent (matches the icon) per the owner's vibrant
-            direction. A: cap at AX3 to match the value's cap so the value stays larger. */}
+        <SymbolView
+          name={icon}
+          size={16 * PixelRatio.getFontScale()}
+          tintColor={color ?? colors.textSecondary}
+        />
+        {/* A: cap at AX3 to match the value's cap so the value stays larger. The glyph carries the
+            accent; the label stays neutral so no text depends on a data colour's contrast. */}
         <Text
           variant="footnote"
+          tone="secondary"
           className="font-semibold"
-          style={{ color }}
           maxFontSizeMultiplier={2.35}
         >
           {label}

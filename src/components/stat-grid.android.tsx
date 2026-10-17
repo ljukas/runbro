@@ -4,6 +4,7 @@ import { PixelRatio, useWindowDimensions, View } from 'react-native';
 
 import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
+import { useTheme } from '@/hooks/use-theme';
 import { cn } from '@/lib/cn';
 
 /**
@@ -26,24 +27,29 @@ function StatGridTile({
   /** `full` for a tile that would otherwise sit alone in the grid's last row. */
   width?: 'half' | 'full';
   icon: SymbolViewProps['name'];
-  color: string;
+  color?: string;
   label: string;
   value: string;
   unit: string;
 }) {
   const { fontScale } = useWindowDimensions();
   const stacked = fontScale >= 1.6;
+  const colors = useTheme();
   return (
     <Card
       surface="card"
       className={cn(stacked || width === 'full' ? 'w-full' : 'w-[48%]', 'gap-5')}
     >
       <View className="flex-row items-center gap-1.5">
-        <SymbolView name={icon} size={16 * PixelRatio.getFontScale()} tintColor={color} />
+        <SymbolView
+          name={icon}
+          size={16 * PixelRatio.getFontScale()}
+          tintColor={color ?? colors.textSecondary}
+        />
         <Text
           variant="footnote"
+          tone="secondary"
           className="font-semibold"
-          style={{ color }}
           maxFontSizeMultiplier={2.35}
         >
           {label}
