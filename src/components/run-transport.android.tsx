@@ -72,7 +72,10 @@ export function RunTransport({
                 // and Cancel take (owner decision, 2026-09-29)
                 <Column>
                   <Text>{FREE_RUN_END_DIALOG.message}</Text>
-                  <TextButton onClick={() => dialog.finish('discard')}>
+                  <TextButton
+                    onClick={() => dialog.finish('discard')}
+                    colors={{ contentColor: colors.destructive }}
+                  >
                     <Text color={colors.destructive}>{FREE_RUN_END_DIALOG.discard}</Text>
                   </TextButton>
                 </Column>
@@ -90,7 +93,10 @@ export function RunTransport({
                   <Text>{FREE_RUN_END_DIALOG.save}</Text>
                 </TextButton>
               ) : (
-                <TextButton onClick={() => dialog.finish()}>
+                <TextButton
+                  onClick={() => dialog.finish()}
+                  colors={{ contentColor: colors.destructive }}
+                >
                   <Text color={colors.destructive}>End run</Text>
                 </TextButton>
               )}

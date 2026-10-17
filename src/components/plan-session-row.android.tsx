@@ -27,7 +27,12 @@ export function PlanSessionRow({
       modifiers={disabled ? [] : [clickable(onPress)]}
       colors={
         isNext
-          ? { containerColor: m.secondaryContainer, contentColor: m.onSecondaryContainer }
+          ? {
+              containerColor: m.secondaryContainer,
+              contentColor: m.onSecondaryContainer,
+              supportingContentColor: m.onSecondaryContainer,
+              trailingContentColor: m.onSecondaryContainer,
+            }
           : undefined
       }
     >
