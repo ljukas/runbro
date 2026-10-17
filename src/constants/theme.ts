@@ -10,9 +10,8 @@ import type { SFSymbol } from 'sf-symbols-typescript';
 
 import type { StoredSegmentKind } from '@/domain/run-motion';
 
+import accent from '../../plugins/brand-accent.json';
 import palette from './brand-palette.json';
-
-const PRIMARY = '#3c87f7';
 
 export const Colors = {
   light: {
@@ -23,9 +22,10 @@ export const Colors = {
     backgroundGrouped: '#F2F2F7',
     backgroundCard: '#ffffff',
     textSecondary: '#60646C',
-    primary: PRIMARY,
-    primaryForeground: '#ffffff',
-    primaryFill: '#0071E3',
+    primary: accent.primary.light,
+    primaryForeground: accent.primaryForeground.light,
+    primaryFill: accent.primaryFill.light,
+    primaryFillForeground: accent.primaryFillForeground.light,
     success: '#34C759',
     successForeground: '#ffffff',
     destructive: '#FF3B30',
@@ -39,9 +39,10 @@ export const Colors = {
     backgroundGrouped: '#000000',
     backgroundCard: '#1C1C1E',
     textSecondary: '#B0B4BA',
-    primary: '#5C9DFF',
-    primaryForeground: '#ffffff',
-    primaryFill: '#0071E3',
+    primary: accent.primary.dark,
+    primaryForeground: accent.primaryForeground.dark,
+    primaryFill: accent.primaryFill.dark,
+    primaryFillForeground: accent.primaryFillForeground.dark,
     success: '#30D158',
     successForeground: '#ffffff',
     destructive: '#FF453A',

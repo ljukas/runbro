@@ -27,6 +27,7 @@ export function materialTheme(scheme: Scheme): Record<ThemeColor, string> {
     primary: m.primary,
     primaryForeground: m.onPrimary,
     primaryFill: m.primary,
+    primaryFillForeground: m.onPrimary,
     success: Colors[scheme].success,
     successForeground: Colors[scheme].successForeground,
     destructive: m.error,
