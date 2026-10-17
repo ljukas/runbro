@@ -34,7 +34,7 @@ tags:
 - assertVisible: "Active Time"
 - scrollUntilVisible:
     element:
-      text: "Warm Up"
+      text: "Warm Up / Cool Down"
 - assertNotVisible: "Interval Pace"
 - assertNotVisible: "Avg Pace"
 - assertNotVisible: "Distance"

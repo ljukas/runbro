@@ -28,16 +28,16 @@ tags:
 # "Interval Pace" rendering instead.
 - assertNotVisible: "Pace"
 - assertNotVisible: "Map of your .* route.*"
-# Every session is bracketed by a warm-up — the finished run's segment key names
-# it in the summary's colour legend. Asserted here, on the settled summary, not
-# on the run screen: the compressed warm-up is ~5 s and races Maestro's poll
-# across the modal transition, so a run-screen "Warm Up" check is inherently
-# flaky. scrollUntilVisible (not a bare assertVisible) so the legend — the last
-# card, below the stat grid — is reached even if it sits below the fold.
-# "Warm Up" is Title Case (SEGMENT_KIND_LABEL, renamed in the HIG-audit PR).
+# Every session is bracketed by a warm-up and cool-down — the summary legend keys them
+# as one merged entry, "Warm Up / Cool Down" (segment-legend.ts). Asserted here, on the
+# settled summary, not on the run screen: the compressed warm-up is ~5 s and races
+# Maestro's poll across the modal transition, so a run-screen "Warm Up" check is
+# inherently flaky. scrollUntilVisible (not a bare assertVisible) so the legend — the last
+# card, below the stat grid — is reached even if it sits below the fold. The anchored full
+# match (ADR 0016) needs the whole merged string.
 - scrollUntilVisible:
     element:
-      text: "Warm Up"
+      text: "Warm Up / Cool Down"
 # Granted but stationary → zero distance: the derived tiles and the splits card stay out.
 - assertNotVisible: "Distance"
 - assertNotVisible: "Interval Pace"
