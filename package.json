@@ -49,7 +49,7 @@
     "victory-native": "^41.26.0"
   },
   "devDependencies": {
-    "@swmansion/argent": "0.26.0",
+    "@swmansion/argent": "0.29.0",
     "@types/bun": "^1.4.2",
     "@types/react": "~19.2.18",
     "babel-plugin-inline-import": "^3.0.0",
