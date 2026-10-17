@@ -1,5 +1,10 @@
 {
   "seed": "#FF7A3D",
+  "gradient": {
+    "from": "#FFB224",
+    "to": "#FF4256",
+    "angleDeg": 135
+  },
   "scheme": {
     "light": {
       "primary": "#A53C00",

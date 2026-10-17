@@ -72,6 +72,18 @@ describe('brand palette', () => {
     expect(palette).toEqual(built.palette);
   });
 
+  it('the gradient matches the brand file', () => {
+    const brand = JSON.parse(
+      readFileSync(join(import.meta.dir, '../../docs/brand/brand.json'), 'utf8'),
+    );
+    const [from, to] = brand.gradient.stops;
+    expect(palette.gradient).toEqual({
+      from: from.color,
+      to: to.color,
+      angleDeg: Number.parseInt(brand.gradient.angle, 10),
+    });
+  });
+
   it('every data colour clears 3:1 on every background of its surface', () => {
     const failures: string[] = [];
     for (const scheme of SCHEMES) {

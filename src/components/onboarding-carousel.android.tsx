@@ -26,10 +26,15 @@ import { useReducedMotion } from 'react-native-reanimated';
 
 import { Island } from '@/components/island';
 import { OnboardingAdvanceButton } from '@/components/onboarding-button';
-import { OnboardingHero, type OnboardingHeroShape } from '@/components/onboarding-hero';
+import {
+  OnboardingHero,
+  type OnboardingHeroFill,
+  type OnboardingHeroShape,
+} from '@/components/onboarding-hero';
 
 export type OnboardingCarouselPage = {
   shape: OnboardingHeroShape;
+  fill?: OnboardingHeroFill;
   symbol: SymbolViewProps['name'];
   headline: string;
   body: string;
@@ -110,7 +115,7 @@ export function OnboardingCarousel({
                 horizontalAlignment="center"
                 modifiers={[fillMaxSize(), verticalScroll(), padding(24, 56, 24, 24)]}
               >
-                <OnboardingHero shape={p.shape} symbol={p.symbol} side={heroSide} />
+                <OnboardingHero shape={p.shape} symbol={p.symbol} side={heroSide} fill={p.fill} />
                 <Spacer modifiers={[height(48)]} />
                 <Island.Text
                   style={{ typography: 'headlineMedium', fontWeight: '500', textAlign: 'center' }}

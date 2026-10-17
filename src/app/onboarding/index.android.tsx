@@ -7,6 +7,7 @@ import { completeAndAdvance } from '@/services/onboarding-store';
 const PAGES: readonly OnboardingCarouselPage[] = [
   {
     shape: 'clover',
+    fill: 'sunrise',
     symbol: { ios: 'figure.run', android: 'directions_run' },
     headline: 'From couch to 5K',
     body: 'Three short sessions a week for nine weeks. Walking at first, running thirty minutes straight by the end.',
