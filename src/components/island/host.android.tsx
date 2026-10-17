@@ -2,7 +2,7 @@ import { Host, type HostProps } from '@expo/ui/jetpack-compose';
 
 import { BRAND_SEED } from '@/constants/brand-scheme';
 
-// Seeds Compose's theme from the brand colour, not the wallpaper (ADR 0027 §4).
+// why: Compose's own theme must start from the brand seed (ADR 0027 §4).
 export function IslandHost({ style, matchContents, ...props }: HostProps) {
   return (
     <Host

@@ -6,12 +6,7 @@ import { IslandListItem } from './list-item';
 import { IslandText } from './text';
 import { IslandView } from './view';
 
-/**
- * The @expo/ui SwiftUI seam (ADR 0013): one `Island` — the `Host` wrapper —
- * with `.Text`, `.Label`, `.Button`, and `.IconButton` naming the repeated
- * idioms so screens stop hand-plumbing `useTheme()` into modifier arrays. The
- * Android fork edits these modules, not the screens (ADR 0005 §4).
- */
+/** The Island seam: one vocabulary over SwiftUI (iOS) and Compose (Android) islands — Host plus .Text, .Label, .Button, .IconButton, .View and .ListItem (ADR 0013, ADR 0025 §2). */
 export const Island = Object.assign(IslandHost, {
   Text: IslandText,
   Label: IslandLabel,
