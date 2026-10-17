@@ -5,12 +5,12 @@ import { View } from 'react-native';
 import { FeatureRow } from '@/components/feature-row';
 import { OnboardingStepScreen } from '@/components/onboarding-step-screen';
 import { Text } from '@/components/ui/text';
-import { useTheme } from '@/hooks/use-theme';
+import { useAccentColors } from '@/hooks/use-accent-colors';
 import { locationTracker } from '@/services/location-tracker';
 import { completeAndAdvance } from '@/services/onboarding-store';
 
 export default function LocationPrimerScreen() {
-  const colors = useTheme();
+  const { tint } = useAccentColors();
   const router = useRouter();
   return (
     <OnboardingStepScreen
@@ -39,7 +39,7 @@ export default function LocationPrimerScreen() {
         <SymbolView
           name={{ ios: 'location.fill', android: 'my_location' }}
           size={64}
-          tintColor={colors.primary}
+          tintColor={tint}
         />
       </View>
       <View className="pt-10">

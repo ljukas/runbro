@@ -4,10 +4,10 @@ import { View } from 'react-native';
 import { FeatureRow } from '@/components/feature-row';
 import { OnboardingStepScreen } from '@/components/onboarding-step-screen';
 import { Text } from '@/components/ui/text';
-import { useTheme } from '@/hooks/use-theme';
+import { useAccentColors } from '@/hooks/use-accent-colors';
 
 export default function AudioCuesScreen() {
-  const colors = useTheme();
+  const { tint } = useAccentColors();
   return (
     <OnboardingStepScreen
       stepId="audio-cues-v1"
@@ -22,7 +22,7 @@ export default function AudioCuesScreen() {
         <SymbolView
           name={{ ios: 'speaker.wave.2.fill', android: 'volume_up' }}
           size={64}
-          tintColor={colors.primary}
+          tintColor={tint}
         />
       </View>
       <View className="pt-10">

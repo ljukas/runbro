@@ -2,7 +2,7 @@ import { SymbolView, type SymbolViewProps } from 'expo-symbols';
 import { PixelRatio, View } from 'react-native';
 
 import { Text } from '@/components/ui/text';
-import { useTheme } from '@/hooks/use-theme';
+import { useAccentColors } from '@/hooks/use-accent-colors';
 
 // Two Apple templates are in play: the roomier first-launch welcome screen, and the
 // tighter feature-intro sheet the permission primers follow (primer-polish spec §4.1).
@@ -33,7 +33,7 @@ export function FeatureRow({
   template?: keyof typeof templates;
   children: string;
 }) {
-  const colors = useTheme();
+  const { tint } = useAccentColors();
   const metrics = templates[template];
 
   return (
@@ -46,7 +46,7 @@ export function FeatureRow({
         <SymbolView
           name={symbol}
           size={Math.round(metrics.symbol * Math.min(PixelRatio.getFontScale(), 1.6))}
-          tintColor={colors.primary}
+          tintColor={tint}
         />
       </View>
 

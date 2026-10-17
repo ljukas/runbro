@@ -8,7 +8,7 @@ import {
 import { Island } from '@/components/island';
 import { formatMinutes } from '@/domain/format';
 import { sessionTotalSeconds, type PlanSession } from '@/domain/plan';
-import { useTheme } from '@/hooks/use-theme';
+import { useAccentColors } from '@/hooks/use-accent-colors';
 
 export function PlanSessionRow({
   session,
@@ -23,7 +23,7 @@ export function PlanSessionRow({
   disabled: boolean;
   onPress: () => void;
 }) {
-  const colors = useTheme();
+  const { tint } = useAccentColors();
   const state = completed ? 'completed' : isNext ? 'up next' : 'not started';
   const duration = formatMinutes(sessionTotalSeconds(session));
   return (
@@ -49,7 +49,7 @@ export function PlanSessionRow({
           <Image
             testID={`plan-next-${session.key}`}
             systemName="arrow.forward.circle.fill"
-            color={colors.primary}
+            color={tint}
             modifiers={[font({ textStyle: 'title3' }), accessibilityLabel('Up next')]}
           />
         ) : null}

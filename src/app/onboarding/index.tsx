@@ -4,10 +4,10 @@ import { Image, PixelRatio, View } from 'react-native';
 import { FeatureRow } from '@/components/feature-row';
 import { OnboardingStepScreen } from '@/components/onboarding-step-screen';
 import { Text } from '@/components/ui/text';
-import { useTheme } from '@/hooks/use-theme';
+import { useAccentColors } from '@/hooks/use-accent-colors';
 
 export default function WelcomeScreen() {
-  const colors = useTheme();
+  const { tint } = useAccentColors();
   return (
     <OnboardingStepScreen
       stepId="welcome-v1"
@@ -18,7 +18,7 @@ export default function WelcomeScreen() {
             <SymbolView
               name={{ ios: 'heart.text.square', android: 'favorite' }}
               size={Math.round(20 * Math.min(PixelRatio.getFontScale(), 1.6))}
-              tintColor={colors.primary}
+              tintColor={tint}
             />
           </View>
           <Text variant="footnote" tone="secondary">
