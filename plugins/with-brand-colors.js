@@ -28,7 +28,7 @@ function withColorSets(config) {
         fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(
           path.join(dir, 'Contents.json'),
-          `${JSON.stringify(colorSetContents(accent[key]), null, 2)}\n`,
+          `${JSON.stringify(colorSetContents(accent[key], name), null, 2)}\n`,
         );
       }
       return cfg;
