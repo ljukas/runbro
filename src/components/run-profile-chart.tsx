@@ -85,12 +85,12 @@ const SILENCE_ZONE_OPACITY = 0.18;
 
 // why clamped: points sit at bucket centres, so the axis starts half a bucket in and a marker at
 // 0 m would fall wholly outside the clipped plot
-function markerCentre(centre: number, width: number, bounds: { left: number; right: number }) {
-  return markerLeft(centre, width, bounds) + width / 2;
-}
-
 function markerLeft(centre: number, width: number, bounds: { left: number; right: number }) {
   return Math.min(Math.max(centre, bounds.left + width / 2), bounds.right - width / 2) - width / 2;
+}
+
+function markerCentre(centre: number, width: number, bounds: { left: number; right: number }) {
+  return markerLeft(centre, width, bounds) + width / 2;
 }
 
 /**
@@ -156,14 +156,14 @@ export function RunProfileChart({
         axisSide: 'left' as const,
         font,
         domain: elevationDomain,
-        labelColor: stat.elevation,
+        labelColor: colors.textSecondary,
         // why no gridlines: the pace axis already draws them, and two unaligned sets read as noise.
         lineWidth: 0,
         formatYLabel: formatElevationTick,
         tickCount,
       },
     ];
-  }, [font, paceDomain, elevationDomain, colors.textSecondary, stat.elevation, grid, fontScale]);
+  }, [font, paceDomain, elevationDomain, colors.textSecondary, grid, fontScale]);
 
   return (
     <View
@@ -208,20 +208,20 @@ export function RunProfileChart({
                 opacity={SILENCE_ZONE_OPACITY}
               />
             ))}
-            {bands?.stopsAtM.map((atM, index) => (
-              <SkiaLine
-                key={`stop-${index}`}
-                p1={vec(markerCentre(xScale(atM), STOP_MARKER_WIDTH, chartBounds), chartBounds.top)}
-                p2={vec(
-                  markerCentre(xScale(atM), STOP_MARKER_WIDTH, chartBounds),
-                  chartBounds.bottom,
-                )}
-                strokeWidth={STOP_MARKER_WIDTH}
-                color={segment.stopped}
-              >
-                <DashPathEffect intervals={STOP_DASH} />
-              </SkiaLine>
-            ))}
+            {bands?.stopsAtM.map((atM, index) => {
+              const x = markerCentre(xScale(atM), STOP_MARKER_WIDTH, chartBounds);
+              return (
+                <SkiaLine
+                  key={`stop-${index}`}
+                  p1={vec(x, chartBounds.top)}
+                  p2={vec(x, chartBounds.bottom)}
+                  strokeWidth={STOP_MARKER_WIDTH}
+                  color={segment.stopped}
+                >
+                  <DashPathEffect intervals={STOP_DASH} />
+                </SkiaLine>
+              );
+            })}
             {/* Drawn first so pace, the run's primary measure, stays on top. */}
             {elevationDomain ? (
               <Line

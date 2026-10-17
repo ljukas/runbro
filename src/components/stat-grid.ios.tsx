@@ -10,15 +10,8 @@ import { Text } from '@/components/ui/text';
 import { useTheme } from '@/hooks/use-theme';
 import { cn } from '@/lib/cn';
 
-/**
- * A two-column grid of stat tiles (ADR 0013 domain component) for the run
- * summary, styled after Apple Health's summary cards: a header of an SF
- * Symbol (tinted when the tile has a colour) plus a neutral label, then a big number with a smaller gray
- * lowercase unit beside it. The value row is a SwiftUI island because SF
- * Rounded — Health's metric face — is only reachable as
- * `Font.system(design: .rounded)`; RN's `fontFamily` cannot name it. Tiles
- * wrap, so adding more later (distance, pace) grows the grid.
- */
+// why a SwiftUI island for the value row: SF Rounded (Health's metric face) is only reachable as
+// Font.system(design: .rounded); RN's fontFamily cannot name it.
 function StatGridRoot({ children }: { children: ReactNode }) {
   return <View className="flex-row flex-wrap justify-between gap-y-3">{children}</View>;
 }

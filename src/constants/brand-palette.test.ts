@@ -5,16 +5,16 @@ import { join } from 'node:path';
 
 import accent from '../../plugins/brand-accent.json';
 import { buildBrandPalette } from '../../scripts/generate-brand-palette';
-import { contrastRatio, minDeltaE00 } from '../domain/color-metrics';
+import { contrastRatio, minDeltaE00 } from '@/domain/color-metrics';
 import palette from './brand-palette.json';
-import { Colors } from './theme';
+import { Colors, SegmentColors, StatColors } from './theme';
 
 type Scheme = 'light' | 'dark';
 const SCHEMES: readonly Scheme[] = ['light', 'dark'];
 
 type Colours = Record<string, string>;
 
-// why: `run` stands in for `running` on the stats surface until StatColors adopts it.
+// why: StatColors.running is the run segment's colour, so `run` is the stats surface's running.
 const dataColours = (scheme: Scheme): Colours => ({
   ...palette.segments[scheme],
   ...palette.stats[scheme],
@@ -196,4 +196,21 @@ describe('brand palette', () => {
       expect(tokens).toEqual(expected);
     }
   });
+});
+
+describe('theme mapping', () => {
+  for (const scheme of SCHEMES) {
+    it(`${scheme}: SegmentColors and StatColors come from the palette`, () => {
+      const seg = palette.segments[scheme];
+      const segmentColors = SegmentColors[scheme];
+      expect(segmentColors.warmup).toBe(seg.warmupCooldown);
+      expect(segmentColors.cooldown).toBe(seg.warmupCooldown);
+      expect(segmentColors.run).toBe(seg.run);
+      expect(segmentColors.walk).toBe(seg.walk);
+      expect(segmentColors.stopped).toBe(seg.stopped);
+      expect(StatColors[scheme].running).toBe(seg.run);
+      expect(StatColors[scheme].pace).toBe(palette.stats[scheme].pace);
+      expect(StatColors[scheme].elevation).toBe(palette.stats[scheme].elevation);
+    });
+  }
 });

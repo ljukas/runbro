@@ -6,8 +6,8 @@ import { segmentLegendEntries } from '@/domain/segment-legend';
 import { useSegmentColors } from '@/hooks/use-theme';
 
 /**
- * Colour key for the SegmentBar (ADR 0013 domain component). One swatch + label per kind present,
- * in `ORDER` — a single continuous-run week shows no "Walk".
+ * Colour key for the SegmentBar (ADR 0013 domain component); warm-up and cool-down share one
+ * entry (`segmentLegendEntries`).
  */
 export function SegmentLegend({
   segments,

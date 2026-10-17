@@ -7,7 +7,8 @@ import {
 } from '@material/material-color-utilities';
 import type { MaterialColors } from '@expo/ui/jetpack-compose';
 
-// Generated, never hand-edited: `bun scripts/generate-brand-palette.ts` (ADR 0027).
+// `bun scripts/generate-brand-palette.ts` writes plugins/brand-accent.json and
+// src/constants/brand-palette.json (ADR 0027); never hand-edit those.
 // Deliberately not a package.json script — `scripts` is a fingerprint source.
 
 const SEED = '#FF7A3D';
@@ -105,9 +106,8 @@ const ROLES = [
   'onTertiaryFixedVariant',
 ] as const satisfies readonly (keyof MaterialColors)[];
 
-type AllRolesListed = Exclude<keyof MaterialColors, (typeof ROLES)[number]> extends never
-  ? true
-  : never;
+type AllRolesListed =
+  Exclude<keyof MaterialColors, (typeof ROLES)[number]> extends never ? true : never;
 const allRolesListed: AllRolesListed = true;
 void allRolesListed;
 
