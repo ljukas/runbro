@@ -1,6 +1,7 @@
 import { Image, Label, type LabelProps } from '@expo/ui/swift-ui';
 import { accessibilityHidden, font, foregroundColor } from '@expo/ui/swift-ui/modifiers';
 
+import { useAccentColors } from '@/hooks/use-accent-colors';
 import { useTheme } from '@/hooks/use-theme';
 
 type Tone = 'default' | 'secondary' | 'primary' | 'success';
@@ -28,9 +29,10 @@ export function IslandLabel({
   decorativeIcon?: boolean;
 }) {
   const colors = useTheme();
+  const { tint } = useAccentColors();
   const toColor = (t: Tone) =>
     t === 'primary'
-      ? colors.primary
+      ? tint
       : t === 'success'
         ? colors.success
         : t === 'secondary'

@@ -4,7 +4,7 @@ Date: 2026-10-17
 
 ## Status
 
-Proposed (2026-10-17). It reverses [ADR 0025](0025-android-staged-migration.md) §4
+Accepted (2026-10-17, on merge of #101). It reverses [ADR 0025](0025-android-staged-migration.md) §4
 ("Android colour is dynamic"); ADR 0025 carries an amendment pointing here. It
 changes the token values of [ADR 0002](0002-uniwind-styling-engine.md), but not
 the mechanism.
@@ -31,6 +31,13 @@ fingerprints. Revision 3 applies it:
 Research and both spikes:
 [`docs/superpowers/research/2026-10-17-brand-colours-in-app.md`](../superpowers/research/2026-10-17-brand-colours-in-app.md).
 The brand: [`docs/brand/`](../brand/README.md).
+
+Implementation, in four stacked stages:
+[1 — sources and data marks](../superpowers/plans/2026-10-17-brand-palette-stage-1-sources-and-data-marks.md),
+[2 — iOS accent](../superpowers/plans/2026-10-17-brand-palette-stage-2-ios-accent.md),
+[3 — Android scheme](../superpowers/plans/2026-10-17-brand-palette-stage-3-android-scheme.md),
+[4 — brand art](../superpowers/plans/2026-10-17-brand-palette-stage-4-brand-art.md).
+The 2026-10-17 amendment below records the values the plans pin.
 
 ## Context
 
@@ -314,3 +321,89 @@ The values therefore live in two committed files, and one generator writes both:
   and amber fails 3:1. They stay decorative.
 - **Tinting iOS `Toggle`s with the brand:** the HIG allows it, but it was rejected
   under "minimize on controls".
+
+## Amendment (2026-10-17): the values the plans pin
+
+Written with the implementation plans. Every figure below came from a script that
+reproduces each number in this ADR (the §1 contrasts, the §5 segment minimums
+11.58 and 17.96, all four failing pairs) and CIEDE2000's published test pairs.
+Stage 1 commits that maths as `src/domain/color-metrics.ts`. The 3:1 floor is now
+measured on the Android cards too: the generated `SchemeContent` surfaces
+(`surfaceContainerHigh`/`Highest`: `#FBE3DB`/`#F5DED6` light, `#342722`/`#40322C`
+dark), not only the iOS ones.
+
+**Three more starting values fail 3:1** on those surfaces:
+
+- light run `#D95E23` is 2.92:1 on `#F5DED6`;
+- light walk `#8E8E93` is 2.87:1 (already named in §5);
+- dark stopped `#5E5CE6` is 2.43:1 on `#40322C`.
+
+**The pinned data colours.** Each passes 3:1 on every card it sits on. Every pair
+drawn on one surface stays ≥ ΔE00 10 under normal, protan, deutan and tritan
+vision.
+
+| | Light | Dark | Changed from §5 |
+|---|---|---|---|
+| run | `#C75115` | `#FF7A3D` | light, for contrast |
+| walk | `#636366` | `#8E8E93` | light, for contrast |
+| warm-up and cool-down | `#0A7C8C` | `#40C8E0` | no |
+| stopped | `#5856D6` | `#7D7AFF` | dark, for contrast |
+| pace (chart line, tile) | `#AF0F8A` | `#FF97D8` | purple → magenta (stop hairline pair) |
+| elevation (chart line, tile) | `#008954` | `#00D385` | green re-picked (run strip pair) |
+
+- **Minimums:** the segment set is 11.5 (light) and 17.8 (dark); the chart is
+  12.2 and 13.2.
+- **Hue:** every chromatic data colour sits ≥ 56° of HCT hue from run's 41°.
+- **Light run vs accent:** light run is now close to the light accent (`#BC4A0C`,
+  ΔE00 3.1). §5 scopes the hue's meaning by surface, so this is accepted.
+
+**Three accents on the stat tiles, not five.** No five-colour set (Running, Active
+Time, Distance, Pace, Elevation) passes the rule with Apple system colours in either
+scheme. Custom sets pass only with dark, desaturated light-mode colours.
+
+- **Coloured:** Running (the run colour), Pace and Elevation. Pace and Elevation
+  match their chart lines.
+- **Neutral:** Active Time, Distance and the free run's Moving Time. Moving Time
+  includes walking, so it isn't running.
+- `StatColors` keeps `running`, `pace` and `elevation` only.
+
+**Coloured labels are text.** The tile labels and the profile card's unit captions
+are 13 pt text, so WCAG 1.4.3 asks 4.5:1, not the 3:1 for graphics. Light run
+(3.53:1) and elevation (3.46:1) miss it on the Android card.
+
+- Labels and captions use `foreground-secondary`.
+- The glyph, or a short line swatch on the profile card, keeps the colour at the
+  graphic bar.
+
+**The route gets a casing.** The tiles under a route can't be listed, and a running
+route mostly lies on roads (dark-mode roads put walk and stopped near 2.6:1).
+
+- Each route line draws over a casing 3 pt wider (1.5 pt a side) in the screen
+  `background` colour.
+- The rule measures route colours against the casing: ≥ 4.33:1 in both schemes.
+- The start marker turns neutral (`foreground`); the finish keeps `success`.
+
+**A third named colour, `PrimaryFillForeground`.** Increased-contrast dark flips the
+fill label to black (§1), and SwiftUI draws a prominent button's label white unless
+told otherwise. The config plugin writes this colour set too, and `Island.Button`
+uses it for the label.
+
+**`primary` as text stays off `background-element`.** Light `#BC4A0C` is 4.48:1 on
+`#F0F0F3`. It clears 4.5:1 on `background`, `background-grouped` and
+`background-card`, which is where the test measures it. No `text-primary` sits on an
+element surface today.
+
+**The gradient appears in one place:** the onboarding welcome hero.
+
+- On iOS that is the app icon image the welcome screen already shows, so the new
+  icon brings the gradient with it.
+- On Android it is the welcome page's clover hero (stage 4).
+- The run summary gets none, because it shows run data (§5).
+
+**Measured on the simulator (stage 2).** iOS 26.5 and 17.5, light, dark and both increased-contrast states.
+
+- The asset-catalog colours compile as specified. The tab bar, `List` buttons, the primary CTA (glass on 26, `borderedProminent` on 17.5, black label in increased-contrast dark), the progress bar, the onboarding symbols and the up-next arrow follow them.
+- Named colours re-resolve live: a light/dark or contrast switch recolours symbols already on screen.
+- On iOS 26, Liquid Glass bar buttons ignore the accent. The back button's glass pill and the `Stack.Toolbar` buttons (the summary's and the map's Close) draw in the label colour in every state. That is the system's monochrome toolbar style and agrees with "minimize its use on controls", so the app doesn't work around it. `navigationTheme()` keeps the accent hex for runtimes before iOS 26.
+
+**Stage 4 note.** The Android welcome hero's sunrise gradient was verified clipped (light, dark, font scale 2.0). D1 (PNG icon) and D2 (same splash in both schemes) landed as the plan recommended.

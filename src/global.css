@@ -19,9 +19,10 @@
     }
 
     @variant light {
-      --color-primary: #3c87f7;
+      --color-primary: #bc4a0c;
       --color-primary-foreground: #ffffff;
-      --color-primary-fill: #0071e3;
+      --color-primary-fill: #bc4a0c;
+      --color-primary-fill-foreground: #ffffff;
       --color-background: #ffffff;
       --color-background-element: #f0f0f3;
       --color-background-selected: #e0e1e6;
@@ -37,9 +38,10 @@
     }
 
     @variant dark {
-      --color-primary: #5c9dff;
-      --color-primary-foreground: #ffffff;
-      --color-primary-fill: #0071e3;
+      --color-primary: #ff7a3d;
+      --color-primary-foreground: #000000;
+      --color-primary-fill: #c75115;
+      --color-primary-fill-foreground: #ffffff;
       --color-background: #000000;
       --color-background-element: #212225;
       --color-background-selected: #2e3135;

@@ -1,4 +1,4 @@
-import { Box, LazyColumn, ListItem, Text } from '@expo/ui/jetpack-compose';
+import { Box, LazyColumn, Text } from '@expo/ui/jetpack-compose';
 import { background, clickable, fillMaxSize, padding } from '@expo/ui/jetpack-compose/modifiers';
 import Constants from 'expo-constants';
 import * as Linking from 'expo-linking';
@@ -65,44 +65,44 @@ export default function SettingsScreen() {
 
         {/* No toggle: only the system can grant this, so the row reports and defers to app Settings. */}
         <ListSectionHeader title="Location" />
-        <ListItem>
-          <ListItem.HeadlineContent>
+        <Island.ListItem>
+          <Island.ListItem.HeadlineContent>
             <Text>Access</Text>
-          </ListItem.HeadlineContent>
-          <ListItem.SupportingContent>
+          </Island.ListItem.HeadlineContent>
+          <Island.ListItem.SupportingContent>
             <Text>
               {location === 'granted'
                 ? 'Location measures your distance and route, and keeps tracking while the screen is off.'
                 : "Without location, runs are still timed correctly — but distance and pace aren't recorded."}
             </Text>
-          </ListItem.SupportingContent>
-          <ListItem.TrailingContent>
+          </Island.ListItem.SupportingContent>
+          <Island.ListItem.TrailingContent>
             <Text>{location ? LOCATION_ACCESS[location] : '—'}</Text>
-          </ListItem.TrailingContent>
-        </ListItem>
+          </Island.ListItem.TrailingContent>
+        </Island.ListItem>
         {location === 'denied' ? (
-          <ListItem modifiers={[clickable(() => void Linking.openSettings())]}>
-            <ListItem.HeadlineContent>
+          <Island.ListItem modifiers={[clickable(() => void Linking.openSettings())]}>
+            <Island.ListItem.HeadlineContent>
               <Text color={colors.primary}>Open Settings</Text>
-            </ListItem.HeadlineContent>
-          </ListItem>
+            </Island.ListItem.HeadlineContent>
+          </Island.ListItem>
         ) : null}
         {location === 'undetermined' ? (
-          <ListItem modifiers={[clickable(() => void locationTracker.requestPermission())]}>
-            <ListItem.HeadlineContent>
+          <Island.ListItem modifiers={[clickable(() => void locationTracker.requestPermission())]}>
+            <Island.ListItem.HeadlineContent>
               <Text color={colors.primary}>Enable location</Text>
-            </ListItem.HeadlineContent>
-          </ListItem>
+            </Island.ListItem.HeadlineContent>
+          </Island.ListItem>
         ) : null}
 
         {/* No switch: Health Connect's revokeAllPermissions() only takes effect after an app
             restart, and Google's guidance sends users to Health Connect instead (ADR 0011). */}
         <ListSectionHeader title="Health Connect" />
-        <ListItem>
-          <ListItem.HeadlineContent>
+        <Island.ListItem>
+          <Island.ListItem.HeadlineContent>
             <Text>Access</Text>
-          </ListItem.HeadlineContent>
-          <ListItem.SupportingContent>
+          </Island.ListItem.HeadlineContent>
+          <Island.ListItem.SupportingContent>
             <Text>
               {health === 'authorized'
                 ? 'Finished runs are saved to Health Connect, with a route if location is on. Older runs can be saved one at a time from their summary.'
@@ -112,75 +112,75 @@ export default function SettingsScreen() {
                     ? 'Saving runs to Health Connect needs the Health Connect app, or an update to it.'
                     : 'Save your finished runs to Health Connect, with distance and route. Nothing is ever read from Health Connect.'}
             </Text>
-          </ListItem.SupportingContent>
-          <ListItem.TrailingContent>
+          </Island.ListItem.SupportingContent>
+          <Island.ListItem.TrailingContent>
             <Text>{HEALTH_ACCESS[health]}</Text>
-          </ListItem.TrailingContent>
-        </ListItem>
+          </Island.ListItem.TrailingContent>
+        </Island.ListItem>
         {health === 'notDetermined' ? (
-          <ListItem modifiers={[clickable(() => void requestWriteAccess())]}>
-            <ListItem.HeadlineContent>
+          <Island.ListItem modifiers={[clickable(() => void requestWriteAccess())]}>
+            <Island.ListItem.HeadlineContent>
               <Text color={colors.primary}>Set up Health Connect</Text>
-            </ListItem.HeadlineContent>
-          </ListItem>
+            </Island.ListItem.HeadlineContent>
+          </Island.ListItem>
         ) : null}
         {health === 'updateRequired' ? (
-          <ListItem modifiers={[clickable(() => void openHealthStore())]}>
-            <ListItem.HeadlineContent>
+          <Island.ListItem modifiers={[clickable(() => void openHealthStore())]}>
+            <Island.ListItem.HeadlineContent>
               <Text color={colors.primary}>Get Health Connect</Text>
-            </ListItem.HeadlineContent>
-          </ListItem>
+            </Island.ListItem.HeadlineContent>
+          </Island.ListItem>
         ) : null}
         {health === 'denied' ? (
-          <ListItem modifiers={[clickable(() => void openHealthApp())]}>
-            <ListItem.HeadlineContent>
+          <Island.ListItem modifiers={[clickable(() => void openHealthApp())]}>
+            <Island.ListItem.HeadlineContent>
               <Text color={colors.primary}>Open Health Connect</Text>
-            </ListItem.HeadlineContent>
-          </ListItem>
+            </Island.ListItem.HeadlineContent>
+          </Island.ListItem>
         ) : null}
-        <ListItem modifiers={[clickable(() => router.navigate('/privacy'))]}>
-          <ListItem.HeadlineContent>
+        <Island.ListItem modifiers={[clickable(() => router.navigate('/privacy'))]}>
+          <Island.ListItem.HeadlineContent>
             <Text color={colors.primary}>Privacy policy</Text>
-          </ListItem.HeadlineContent>
-        </ListItem>
+          </Island.ListItem.HeadlineContent>
+        </Island.ListItem>
 
         <ListSectionHeader title="About" />
-        <ListItem>
-          <ListItem.HeadlineContent>
+        <Island.ListItem>
+          <Island.ListItem.HeadlineContent>
             <Text>Version</Text>
-          </ListItem.HeadlineContent>
-          <ListItem.SupportingContent>
+          </Island.ListItem.HeadlineContent>
+          <Island.ListItem.SupportingContent>
             <Text>No account, no sign-in. Your runs stay on this device.</Text>
-          </ListItem.SupportingContent>
-          <ListItem.TrailingContent>
+          </Island.ListItem.SupportingContent>
+          <Island.ListItem.TrailingContent>
             <Text>{Constants.expoConfig?.version ?? '—'}</Text>
-          </ListItem.TrailingContent>
-        </ListItem>
+          </Island.ListItem.TrailingContent>
+        </Island.ListItem>
 
         {__DEV__ ? (
           <>
             <ListSectionHeader title="Developer" />
             <SettingsToggle label="Compressed plan" settingKey="useCompressedPlan" />
-            <ListItem modifiers={[clickable(() => resetAndRestart(router))]}>
-              <ListItem.HeadlineContent>
+            <Island.ListItem modifiers={[clickable(() => resetAndRestart(router))]}>
+              <Island.ListItem.HeadlineContent>
                 <Text>Reset onboarding</Text>
-              </ListItem.HeadlineContent>
-            </ListItem>
+              </Island.ListItem.HeadlineContent>
+            </Island.ListItem>
           </>
         ) : null}
 
         {isFieldTestBuild() ? (
           <>
             <ListSectionHeader title="Field test" />
-            <ListItem>
-              <ListItem.SupportingContent>
+            <Island.ListItem>
+              <Island.ListItem.SupportingContent>
                 <Text>
                   Starts an untracked capture for the barometer field tests
                   (docs/field-test-capture-protocol.md). No cues, no plan progress, no Health
                   Connect write.
                 </Text>
-              </ListItem.SupportingContent>
-            </ListItem>
+              </Island.ListItem.SupportingContent>
+            </Island.ListItem>
             {/* The only bare button in this list; ListItem rows inset themselves. */}
             <Box modifiers={[padding(16, 8, 16, 0)]}>
               <FieldTestRow />

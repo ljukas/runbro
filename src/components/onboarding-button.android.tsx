@@ -8,7 +8,6 @@ import {
   Row,
   Text,
   TextButton,
-  useMaterialColors,
 } from '@expo/ui/jetpack-compose';
 import {
   animateContentSize,
@@ -23,6 +22,7 @@ import {
 import type { SymbolViewProps } from 'expo-symbols';
 
 import { ComposeSymbol } from '@/components/compose-symbol';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 
 // Matches Island.Button's CTA height, as a minimum so a label that wraps at a large font scale
 // grows the button instead of clipping.
@@ -46,7 +46,7 @@ export function OnboardingButton({
   fill?: boolean;
   trailingSymbol?: SymbolViewProps['name'];
 }) {
-  const colors = useMaterialColors();
+  const colors = useBrandScheme();
   const text = (
     <Text
       style={{
@@ -59,7 +59,12 @@ export function OnboardingButton({
     </Text>
   );
 
-  if (variant === 'text') return <TextButton onClick={onPress}>{text}</TextButton>;
+  if (variant === 'text')
+    return (
+      <TextButton onClick={onPress} colors={{ contentColor: colors.primary }}>
+        {text}
+      </TextButton>
+    );
 
   const shared = {
     onClick: onPress,
@@ -80,9 +85,19 @@ export function OnboardingButton({
   );
 
   return variant === 'tonal' ? (
-    <FilledTonalButton {...shared}>{content}</FilledTonalButton>
+    <FilledTonalButton
+      {...shared}
+      colors={{
+        containerColor: colors.secondaryContainer,
+        contentColor: colors.onSecondaryContainer,
+      }}
+    >
+      {content}
+    </FilledTonalButton>
   ) : (
-    <Button {...shared}>{content}</Button>
+    <Button {...shared} colors={{ containerColor: colors.primary, contentColor: colors.onPrimary }}>
+      {content}
+    </Button>
   );
 }
 
@@ -112,7 +127,7 @@ export function OnboardingAdvanceButton({
   onPress: () => void;
   reduceMotion: boolean;
 }) {
-  const colors = useMaterialColors();
+  const colors = useBrandScheme();
   const labelStyle = { typography: 'labelLarge', fontSize: 16 } as const;
   const next = (
     <Text color={colors.onSecondaryContainer} style={labelStyle}>
@@ -137,7 +152,10 @@ export function OnboardingAdvanceButton({
       onClick={onPress}
       // why transparent: the container colour is painted by the animated background below; M3
       // Button's own container colour switches without a transition.
-      colors={{ containerColor: TRANSPARENT }}
+      colors={{
+        containerColor: TRANSPARENT,
+        contentColor: finish ? colors.onPrimary : colors.onSecondaryContainer,
+      }}
       contentPadding={{ start: 28, end: finish ? 20 : 28 }}
       modifiers={[
         defaultMinSize({ minHeight: CTA_HEIGHT }),

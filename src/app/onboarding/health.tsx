@@ -4,11 +4,11 @@ import { View } from 'react-native';
 import { FeatureRow } from '@/components/feature-row';
 import { OnboardingStepScreen } from '@/components/onboarding-step-screen';
 import { Text } from '@/components/ui/text';
-import { useTheme } from '@/hooks/use-theme';
+import { useAccentColors } from '@/hooks/use-accent-colors';
 import { requestWriteAccess } from '@/services/health';
 
 export default function HealthPrimerScreen() {
-  const colors = useTheme();
+  const { tint } = useAccentColors();
   return (
     <OnboardingStepScreen
       stepId="health-primer-v1"
@@ -28,11 +28,7 @@ export default function HealthPrimerScreen() {
       }
     >
       <View className="items-center">
-        <SymbolView
-          name={{ ios: 'heart.fill', android: 'favorite' }}
-          size={64}
-          tintColor={colors.primary}
-        />
+        <SymbolView name={{ ios: 'heart.fill', android: 'favorite' }} size={64} tintColor={tint} />
       </View>
       <View className="pt-10">
         <Text variant="title1" accessibilityRole="header">

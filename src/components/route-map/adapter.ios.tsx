@@ -54,7 +54,7 @@ export function RouteMap({
       systemImage: 'figure.run',
       coordinates: { latitude: endpoints.start.lat, longitude: endpoints.start.lng },
       title: '',
-      tintColor: colors.primary,
+      tintColor: colors.text,
     };
     if (merged) return [start];
     return [

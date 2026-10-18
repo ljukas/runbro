@@ -15,6 +15,7 @@ import type { AndroidSymbol, SFSymbol } from 'expo-symbols';
 import type { ReactNode } from 'react';
 
 import { Island } from '@/components/island';
+import { useAccentColors } from '@/hooks/use-accent-colors';
 import { useTheme } from '@/hooks/use-theme';
 
 const CORNER_RADIUS = 22;
@@ -59,6 +60,7 @@ function RunModeCardRoot({
   action?: { label: string; disabled?: boolean; onPress: () => void };
 }) {
   const colors = useTheme();
+  const { tint: accent } = useAccentColors();
   return (
     <VStack
       alignment="leading"
@@ -86,7 +88,7 @@ function RunModeCardRoot({
         <HStack spacing={14} modifiers={[contentShape(shapes.rectangle())]}>
           <Image
             systemName={symbol.ios}
-            color={featured ? colors.primary : colors.textSecondary}
+            color={featured ? accent : colors.textSecondary}
             modifiers={[font({ textStyle: 'title2' }), frame({ width: 34 })]}
           />
           <VStack alignment="leading" spacing={2}>
@@ -103,9 +105,7 @@ function RunModeCardRoot({
           />
         </HStack>
       </Button>
-      {progress === undefined ? null : (
-        <ProgressView value={progress} modifiers={[tint(colors.primary)]} />
-      )}
+      {progress === undefined ? null : <ProgressView value={progress} modifiers={[tint(accent)]} />}
       {action ? (
         <Island.Button
           inline

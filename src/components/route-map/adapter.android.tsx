@@ -88,7 +88,7 @@ export function RouteMap({
       lineColor: colors.background,
       lineWidth: ENDPOINT_RING_DP * pixelRatio,
     });
-    const start = dot('start', endpoints.start, colors.primary);
+    const start = dot('start', endpoints.start, colors.text);
     if (haversineMeters(endpoints.start, endpoints.finish) < ENDPOINT_MERGE_M) return [start];
     return [start, dot('finish', endpoints.finish, colors.success)];
   }, [endpoints, bbox, colors, pixelRatio]);

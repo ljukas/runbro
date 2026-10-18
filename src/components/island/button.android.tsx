@@ -1,6 +1,7 @@
 import { Button, OutlinedButton, Text } from '@expo/ui/jetpack-compose';
 import { fillMaxWidth, height, testID as testIDModifier } from '@expo/ui/jetpack-compose/modifiers';
 
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import { useTheme } from '@/hooks/use-theme';
 
 import { IslandHost } from './host';
@@ -28,6 +29,7 @@ export function IslandButton({
   testID?: string;
 }) {
   const colors = useTheme();
+  const roles = useBrandScheme();
   const modifiers = [
     ...(fill ? [fillMaxWidth(), height(CTA_HEIGHT)] : []),
     ...(testID ? [testIDModifier(testID)] : []),
@@ -36,7 +38,12 @@ export function IslandButton({
 
   const button =
     variant === 'secondary' ? (
-      <OutlinedButton onClick={onPress} enabled={!disabled} modifiers={modifiers}>
+      <OutlinedButton
+        onClick={onPress}
+        enabled={!disabled}
+        modifiers={modifiers}
+        colors={{ contentColor: roles.primary }}
+      >
         {content}
       </OutlinedButton>
     ) : (
@@ -47,7 +54,7 @@ export function IslandButton({
         colors={
           variant === 'destructive'
             ? { containerColor: colors.destructive, contentColor: colors.destructiveForeground }
-            : undefined
+            : { containerColor: roles.primary, contentColor: roles.onPrimary }
         }
       >
         {content}

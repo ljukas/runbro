@@ -8,10 +8,11 @@
     "icon": "./assets/images/icon.png",
     "scheme": "runbro",
     "userInterfaceStyle": "automatic",
+    "primaryColor": "#A53C00",
     "ios": {
       "bundleIdentifier": "se.lukaslindqvist.runbro",
       "deploymentTarget": "17.0",
-      "icon": "./assets/expo.icon",
+      "icon": "./assets/images/icon.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -19,7 +20,7 @@
     "android": {
       "package": "se.lukaslindqvist.runbro",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#FF7A3D",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -34,7 +35,7 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#FF7A3D",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
@@ -72,6 +73,7 @@
           "updateUsageDescription": "Save your completed runs (duration, distance, route) to Apple Health."
         }
       ],
+      "./plugins/with-brand-colors",
       [
         "expo-build-properties",
         {

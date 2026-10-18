@@ -9,11 +9,11 @@ import { useTheme } from '@/hooks/use-theme';
  * proportional bar plus its colour key, on the grouped-list card surface. Maps
  * the stored segments to the actual durations the bar and legend render.
  *
- * The legend renders each phase name as real Text, so VoiceOver already speaks
- * "Warm Up", "Run", … individually — do NOT wrap this card in `accessible`
- * with a combined label: that collapses those labels out of the a11y tree and
- * breaks the summary's phase assertions (complete-session's scrollUntilVisible
- * "Warm Up"). Describing the silent bar alone is a deferred follow-up.
+ * The legend renders each entry's name as real Text (warm-up and cool-down share
+ * "Warm Up / Cool Down"), so VoiceOver already speaks them individually — do NOT wrap
+ * this card in `accessible` with a combined label: that collapses those labels out of
+ * the a11y tree and breaks the summary flows' scrollUntilVisible on "Warm Up / Cool Down".
+ * Describing the silent bar alone is a deferred follow-up.
  */
 export function SegmentBreakdown({ segments }: { segments: RunSegment[] }) {
   const colors = useTheme();

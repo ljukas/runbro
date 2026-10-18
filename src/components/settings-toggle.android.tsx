@@ -1,6 +1,8 @@
-import { ListItem, Switch, Text } from '@expo/ui/jetpack-compose';
+import { Switch, Text } from '@expo/ui/jetpack-compose';
 import { clickable } from '@expo/ui/jetpack-compose/modifiers';
 
+import { Island } from '@/components/island';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import type { SettingsValues } from '@/services/settings';
 import { settingsStore, useSetting } from '@/services/settings-store';
 
@@ -17,21 +19,35 @@ export function SettingsToggle({
   description?: string;
   settingKey: keyof SettingsValues;
 }) {
+  const m = useBrandScheme();
   const value = useSetting(settingKey);
   const toggle = () => settingsStore.set(settingKey, !value);
   return (
-    <ListItem modifiers={[clickable(toggle)]}>
-      <ListItem.HeadlineContent>
+    <Island.ListItem modifiers={[clickable(toggle)]}>
+      <Island.ListItem.HeadlineContent>
         <Text>{label}</Text>
-      </ListItem.HeadlineContent>
+      </Island.ListItem.HeadlineContent>
       {description ? (
-        <ListItem.SupportingContent>
+        <Island.ListItem.SupportingContent>
           <Text>{description}</Text>
-        </ListItem.SupportingContent>
+        </Island.ListItem.SupportingContent>
       ) : null}
-      <ListItem.TrailingContent>
-        <Switch value={value} onCheckedChange={(next) => settingsStore.set(settingKey, next)} />
-      </ListItem.TrailingContent>
-    </ListItem>
+      <Island.ListItem.TrailingContent>
+        <Switch
+          value={value}
+          onCheckedChange={(next) => settingsStore.set(settingKey, next)}
+          colors={{
+            checkedThumbColor: m.onPrimary,
+            checkedTrackColor: m.primary,
+            checkedBorderColor: m.primary,
+            checkedIconColor: m.onPrimaryContainer,
+            uncheckedThumbColor: m.outline,
+            uncheckedTrackColor: m.surfaceContainerHighest,
+            uncheckedBorderColor: m.outline,
+            uncheckedIconColor: m.surfaceContainerHighest,
+          }}
+        />
+      </Island.ListItem.TrailingContent>
+    </Island.ListItem>
   );
 }

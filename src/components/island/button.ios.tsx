@@ -4,13 +4,14 @@ import {
   controlSize,
   disabled as disabledModifier,
   font,
+  foregroundStyle,
   frame,
   padding,
   tint,
 } from '@expo/ui/swift-ui/modifiers';
 import { PixelRatio } from 'react-native';
 
-import { useTheme } from '@/hooks/use-theme';
+import { useAccentColors } from '@/hooks/use-accent-colors';
 import { isGlassAvailable } from '@/lib/glass';
 
 import { IslandHost } from './host';
@@ -28,8 +29,8 @@ export function islandButtonHeight(): number {
 
 /**
  * The app's SwiftUI buttons, named once (ADR 0013): the `borderedProminent` +
- * `tint` primary CTA (Liquid Glass where the build supports it), plus `bordered`
- * `secondary` and `destructive` variants. Threads `useTheme()` /
+ * named-fill primary CTA (Liquid Glass where the build supports it), plus `bordered`
+ * `secondary` and `destructive` variants. Threads `useAccentColors()` /
  * `isGlassAvailable()` internally so screens stop hand-rolling the stack.
  *
  * Standalone by default — it brings its own `Host`; the Android side is
@@ -54,37 +55,40 @@ export function IslandButton({
   inline?: boolean;
   testID?: string;
 }) {
-  const colors = useTheme();
+  const { fill: fillColor, onFill } = useAccentColors();
 
-  // Unlike the icon button, the bordered styles dim themselves when disabled:
-  // the label carries no explicit foreground color to outrank the treatment.
+  // why: an explicit label foreground outranks SwiftUI's disabled dimming, so a
+  // disabled primary omits it (the bordered variants never set one).
   const modifiers =
     variant === 'primary'
       ? [
           buttonStyle(isGlassAvailable() ? 'glassProminent' : 'borderedProminent'),
           controlSize('large'),
-          tint(colors.primaryFill),
+          tint(fillColor),
           disabledModifier(disabled),
         ]
       : [buttonStyle('bordered'), controlSize('large'), disabledModifier(disabled)];
   const role = variant === 'destructive' ? 'destructive' : undefined;
 
-  const button = fill ? (
-    <Button testID={testID} role={role} onPress={onPress} modifiers={modifiers}>
-      {/* SwiftUI sizes a button by its label — the maxWidth frame on the label
-          (not the button) is what makes the capsule span the screen. */}
-      <Text
-        modifiers={[
+  // why: the fill turns pale in increased-contrast dark, so the primary label
+  // must name its own foreground instead of keeping SwiftUI's white.
+  const labelModifiers = [
+    ...(variant === 'primary' && !disabled ? [foregroundStyle(onFill)] : []),
+    ...(fill
+      ? [
           font({ textStyle: 'body', weight: 'semibold' }),
+          // SwiftUI sizes a button by its label — the maxWidth frame on the label
+          // (not the button) is what makes the capsule span the screen.
           frame({ maxWidth: 10000 }),
           padding({ vertical: 2 }),
-        ]}
-      >
-        {label}
-      </Text>
+        ]
+      : []),
+  ];
+
+  const button = (
+    <Button testID={testID} role={role} onPress={onPress} modifiers={modifiers}>
+      <Text modifiers={labelModifiers}>{label}</Text>
     </Button>
-  ) : (
-    <Button testID={testID} role={role} label={label} onPress={onPress} modifiers={modifiers} />
   );
 
   if (inline) return button;

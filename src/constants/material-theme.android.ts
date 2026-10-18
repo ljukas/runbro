@@ -1,21 +1,11 @@
-import { getMaterialColors } from '@expo/ui/jetpack-compose';
-
+import { brandScheme } from './brand-scheme';
 import { Colors, type ThemeColor } from './theme';
 
 export type Scheme = 'light' | 'dark';
 
-const cache = new Map<Scheme, Record<ThemeColor, string>>();
-
-/**
- * The app's colour tokens filled from the device's Material 3 palette — wallpaper-derived on
- * Android 12+ (ADR 0025). Cached per scheme: the palette only changes with a wallpaper change,
- * which lands on the next launch. `success` has no Material role and keeps the shared value.
- */
-export function materialTheme(scheme: Scheme): Record<ThemeColor, string> {
-  const cached = cache.get(scheme);
-  if (cached) return cached;
-  const m = getMaterialColors({ scheme });
-  const theme: Record<ThemeColor, string> = {
+function build(scheme: Scheme): Record<ThemeColor, string> {
+  const m = brandScheme(scheme);
+  return {
     text: m.onSurface,
     background: m.surface,
     // Filled cards sit two tonal steps above the page, or they read as the same surface.
@@ -27,11 +17,22 @@ export function materialTheme(scheme: Scheme): Record<ThemeColor, string> {
     primary: m.primary,
     primaryForeground: m.onPrimary,
     primaryFill: m.primary,
+    primaryFillForeground: m.onPrimary,
     success: Colors[scheme].success,
     successForeground: Colors[scheme].successForeground,
     destructive: m.error,
     destructiveForeground: m.onError,
   };
-  cache.set(scheme, theme);
-  return theme;
+}
+
+// why module scope: a stable object per scheme keeps useTheme() consumers' memo dependencies and
+// compiler memo blocks from invalidating every render.
+const THEMES: Record<Scheme, Record<ThemeColor, string>> = {
+  light: build('light'),
+  dark: build('dark'),
+};
+
+/** Colour tokens filled from the generated brand scheme (ADR 0027 §4); `success` has no Material role and keeps the shared value. */
+export function materialTheme(scheme: Scheme): Record<ThemeColor, string> {
+  return THEMES[scheme];
 }

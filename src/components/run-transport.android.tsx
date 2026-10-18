@@ -5,6 +5,7 @@ import { Island } from '@/components/island';
 import type { RunTransportEnd } from '@/components/run-transport-end';
 import { FREE_RUN_END_DIALOG } from '@/domain/free-run-view';
 import { useEndRunDialog } from '@/hooks/use-end-run-dialog';
+import { useBrandScheme } from '@/hooks/use-brand-scheme';
 import { useTheme } from '@/hooks/use-theme';
 import { runEngine } from '@/services/run-engine';
 
@@ -18,7 +19,9 @@ export function RunTransport({
   end: RunTransportEnd;
 }) {
   const colors = useTheme();
+  const m = useBrandScheme();
   const dialog = useEndRunDialog(end);
+  const primaryText = { contentColor: m.primary };
 
   return (
     <View className="flex-row items-center gap-10">
@@ -51,7 +54,15 @@ export function RunTransport({
       {/* why conditional: an AlertDialog is presented by mounting, so it exists only while open. */}
       {dialog.open ? (
         <Island matchContents>
-          <AlertDialog onDismissRequest={() => dialog.setOpen(false)}>
+          <AlertDialog
+            onDismissRequest={() => dialog.setOpen(false)}
+            colors={{
+              containerColor: m.surfaceContainerHigh,
+              iconContentColor: m.secondary,
+              titleContentColor: m.onSurface,
+              textContentColor: m.onSurfaceVariant,
+            }}
+          >
             <AlertDialog.Title>
               <Text>{end.mode === 'open' ? FREE_RUN_END_DIALOG.title : 'End this run?'}</Text>
             </AlertDialog.Title>
@@ -61,7 +72,10 @@ export function RunTransport({
                 // and Cancel take (owner decision, 2026-09-29)
                 <Column>
                   <Text>{FREE_RUN_END_DIALOG.message}</Text>
-                  <TextButton onClick={() => dialog.finish('discard')}>
+                  <TextButton
+                    onClick={() => dialog.finish('discard')}
+                    colors={{ contentColor: colors.destructive }}
+                  >
                     <Text color={colors.destructive}>{FREE_RUN_END_DIALOG.discard}</Text>
                   </TextButton>
                 </Column>
@@ -75,17 +89,20 @@ export function RunTransport({
             </AlertDialog.Text>
             <AlertDialog.ConfirmButton>
               {end.mode === 'open' ? (
-                <TextButton onClick={() => dialog.finish('save')}>
+                <TextButton onClick={() => dialog.finish('save')} colors={primaryText}>
                   <Text>{FREE_RUN_END_DIALOG.save}</Text>
                 </TextButton>
               ) : (
-                <TextButton onClick={() => dialog.finish()}>
+                <TextButton
+                  onClick={() => dialog.finish()}
+                  colors={{ contentColor: colors.destructive }}
+                >
                   <Text color={colors.destructive}>End run</Text>
                 </TextButton>
               )}
             </AlertDialog.ConfirmButton>
             <AlertDialog.DismissButton>
-              <TextButton onClick={() => dialog.setOpen(false)}>
+              <TextButton onClick={() => dialog.setOpen(false)} colors={primaryText}>
                 <Text>Cancel</Text>
               </TextButton>
             </AlertDialog.DismissButton>

@@ -10,7 +10,8 @@ import type { SFSymbol } from 'sf-symbols-typescript';
 
 import type { StoredSegmentKind } from '@/domain/run-motion';
 
-const PRIMARY = '#3c87f7';
+import accent from '../../plugins/brand-accent.json';
+import palette from './brand-palette.json';
 
 export const Colors = {
   light: {
@@ -21,9 +22,10 @@ export const Colors = {
     backgroundGrouped: '#F2F2F7',
     backgroundCard: '#ffffff',
     textSecondary: '#60646C',
-    primary: PRIMARY,
-    primaryForeground: '#ffffff',
-    primaryFill: '#0071E3',
+    primary: accent.primary.light,
+    primaryForeground: accent.primaryForeground.light,
+    primaryFill: accent.primaryFill.light,
+    primaryFillForeground: accent.primaryFillForeground.light,
     success: '#34C759',
     successForeground: '#ffffff',
     destructive: '#FF3B30',
@@ -37,9 +39,10 @@ export const Colors = {
     backgroundGrouped: '#000000',
     backgroundCard: '#1C1C1E',
     textSecondary: '#B0B4BA',
-    primary: '#5C9DFF',
-    primaryForeground: '#ffffff',
-    primaryFill: '#0071E3',
+    primary: accent.primary.dark,
+    primaryForeground: accent.primaryForeground.dark,
+    primaryFill: accent.primaryFill.dark,
+    primaryFillForeground: accent.primaryFillForeground.dark,
     success: '#30D158',
     successForeground: '#ffffff',
     destructive: '#FF453A',
@@ -49,57 +52,40 @@ export const Colors = {
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
-/** Segment-kind accents, Apple system colours per scheme; read via `useSegmentColors()` so they
- * follow light/dark. */
+const segmentColorsFor = (scheme: 'light' | 'dark'): Record<StoredSegmentKind, string> => {
+  const c = palette.segments[scheme];
+  return {
+    warmup: c.warmupCooldown,
+    run: c.run,
+    walk: c.walk,
+    cooldown: c.warmupCooldown,
+    stopped: c.stopped,
+  };
+};
+
+/** Segment-kind accents from the generated brand palette (ADR 0027); warm-up and cool-down share
+ * one colour. Read via `useSegmentColors()` so they follow light/dark. */
 export const SegmentColors: Record<'light' | 'dark', Record<StoredSegmentKind, string>> = {
-  light: {
-    warmup: '#FF9500',
-    run: '#007AFF',
-    walk: '#8E8E93',
-    cooldown: '#30B0C7',
-    stopped: '#A2845E',
-  },
-  dark: {
-    warmup: '#FF9F0A',
-    run: '#0A84FF',
-    walk: '#8E8E93',
-    cooldown: '#40CBE0',
-    stopped: '#AC8E68',
-  },
+  light: segmentColorsFor('light'),
+  dark: segmentColorsFor('dark'),
 };
 
 /** Run intervals are drawn thicker so phase never depends on hue alone (spec §7.3). */
 export const ROUTE_STROKE_W = 4;
 export const ROUTE_STROKE_W_RUN = 7;
 
-/** Run-summary stat-tile accents (ADR 0013) — chosen for the summary cards and
- * intentionally INDEPENDENT of the segment-bar palette (they need not match).
- * Apple iOS system colors, per color scheme. Access via `useStatColors()`. */
+/** Extra width of the casing drawn under every route line. */
+export const ROUTE_CASING_W = 3;
+
+/** Stat accents from the brand palette (ADR 0027's amendment): `running` is the run segment's
+ * colour, so the Running tile and the run intervals read as one thing, and `pace`/`elevation` are
+ * the chart's two series. Other tiles stay neutral. Access via `useStatColors()`. */
 export const StatColors: Record<
   'light' | 'dark',
-  {
-    running: string;
-    activeTime: string;
-    distance: string;
-    pace: string;
-    elevation: string;
-  }
+  { running: string; pace: string; elevation: string }
 > = {
-  light: {
-    running: '#FF3B30', // systemRed
-    activeTime: '#007AFF', // systemBlue
-    distance: '#5856D6', // systemIndigo
-    pace: '#AF52DE', // systemPurple
-    // why not systemGreen #34C759: ~2.2:1 on white is too faint for a 2 pt chart line.
-    elevation: '#248A3D', // accessible systemGreen
-  },
-  dark: {
-    running: '#FF453A',
-    activeTime: '#0A84FF',
-    distance: '#5E5CE6',
-    pace: '#BF5AF2',
-    elevation: '#30D158',
-  },
+  light: { running: palette.segments.light.run, ...palette.stats.light },
+  dark: { running: palette.segments.dark.run, ...palette.stats.dark },
 };
 
 /** Chart gridlines, per color scheme. Deliberately far fainter than any data drawn over them —

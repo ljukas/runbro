@@ -55,7 +55,19 @@ module.exports = defineConfig([
     // runtime, not a type error — the two vocabularies only exist on their own platform (ADR 0025).
     files: ['**/*.android.{ts,tsx}'],
     rules: {
-      'no-restricted-imports': ['error', { patterns: ['@expo/ui/swift-ui', '@expo/ui/swift-ui/*'] }],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: ['@expo/ui/swift-ui', '@expo/ui/swift-ui/*'],
+          paths: [
+            {
+              name: '@expo/ui/jetpack-compose',
+              importNames: ['getMaterialColors', 'useMaterialColors'],
+              message: 'Brand scheme only (ADR 0027 §4): use brandScheme() / useBrandScheme().',
+            },
+          ],
+        },
+      ],
     },
   },
   {

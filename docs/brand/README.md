@@ -5,9 +5,7 @@ The **Dash R** mark: a white italic R with three speed dashes on a sunrise gradi
 concepts. It is about running and the RunBro name, not about Couch to 5K, because
 the plan is only the first of many the app will carry.
 
-**Status:** designed, not yet in the app. The app still ships Expo's template icon
-and splash, and its colours do not follow this palette yet. The work to change that
-is tracked in the [roadmap](../roadmap/README.md).
+**Status:** the icon, splash and palette are built and ship with the next native release. See the [roadmap](../roadmap/README.md).
 
 ![Overview](exports/final-sheet.png)
 
@@ -27,23 +25,12 @@ The type is **Barlow** (SIL Open Font License, from Google Fonts): 900 italic fo
 the wordmark, 800 italic for taglines, 600 for body text. It is for marketing art
 only; the app keeps the system fonts.
 
-## Open questions for the palette
+## Palette
 
-The app's colours have to follow this mark before the store screenshots are taken.
-These are the questions the palette has to answer:
-
-- **Where the brand shows.** Which surfaces carry the orange and coral (buttons,
-  the active tab, the run screen, charts), and which stay calm system colours.
-- **Android.** The app now takes its Material You colours from the wallpaper
-  (ADR 0025). Should it use brand colours instead, or keep wallpaper colours as an
-  option?
-- **Run, walk and warm-up colours.** Warm-up is already orange and run is system
-  blue, so the segment colours (`useSegmentColors`, the pace chart, the interval
-  bar) need a new mapping that doesn't clash with the brand.
-- **Contrast.** White on `#FF7A3D` is about 2.6:1 (1.8:1 on the amber end, 3.4:1 on the coral end), below the 4.5:1 WCAG AA asks of
-  body text. Text and controls need a darker shade of the brand, while the bright
-  gradient stays decorative.
-- **Dark mode** on both platforms.
+The app's colours follow this mark per [ADR 0027](../adr/0027-brand-palette-accent-and-generated-material-scheme.md)
+(its 2026-10-17 amendment pins the values). White on `#FF7A3D` is about 2.6:1
+(1.8:1 on the amber end, 3.4:1 on the coral end), below the 4.5:1 WCAG AA asks of
+body text, so the gradient is decoration only; text and controls use darker shades.
 
 To re-export an icon, render its SVG at the target size, for example with headless
 Chrome:

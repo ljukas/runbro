@@ -21,7 +21,6 @@ export function FreeRunStatGrid({
     <StatGrid>
       <StatGrid.Tile
         icon={{ ios: 'stopwatch.fill', android: 'timer' }}
-        color={stat.activeTime}
         label="Active Time"
         {...clockParts(stats.activeS)}
       />
@@ -29,13 +28,11 @@ export function FreeRunStatGrid({
         <>
           <StatGrid.Tile
             icon={{ ios: 'figure.run', android: 'directions_run' }}
-            color={stat.running}
             label="Moving Time"
             {...clockParts(stats.movingTimeS)}
           />
           <StatGrid.Tile
             icon={{ ios: 'location.fill', android: 'my_location' }}
-            color={stat.distance}
             label="Distance"
             {...distanceParts(stats.distanceM)}
           />
